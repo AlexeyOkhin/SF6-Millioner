@@ -10,7 +10,6 @@
 		0CE263B3298F6B2B00660514 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE263B2298F6B2B00660514 /* AppDelegate.swift */; };
 		0CE263B5298F6B2B00660514 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE263B4298F6B2B00660514 /* SceneDelegate.swift */; };
 		0CE263B7298F6B2B00660514 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE263B6298F6B2B00660514 /* MainViewController.swift */; };
-		0CE263BA298F6B2B00660514 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0CE263B8298F6B2B00660514 /* Main.storyboard */; };
 		0CE263BC298F6B2F00660514 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0CE263BB298F6B2F00660514 /* Assets.xcassets */; };
 		0CE263BF298F6B2F00660514 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0CE263BD298F6B2F00660514 /* LaunchScreen.storyboard */; };
 		0CE263D1298F6DE000660514 /* Guidelines in Resources */ = {isa = PBXBuildFile; fileRef = 0CE263D0298F6DE000660514 /* Guidelines */; };
@@ -26,7 +25,6 @@
 		0CE263B2298F6B2B00660514 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0CE263B4298F6B2B00660514 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		0CE263B6298F6B2B00660514 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
-		0CE263B9298F6B2B00660514 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0CE263BB298F6B2F00660514 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0CE263BE298F6B2F00660514 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0CE263C0298F6B2F00660514 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -69,10 +67,9 @@
 			isa = PBXGroup;
 			children = (
 				0CE263D0298F6DE000660514 /* Guidelines */,
-				0CE263C9298F6C2400660514 /* MainFlow */,
 				0CE263C6298F6B7900660514 /* Application */,
 				0CE263C7298F6B8D00660514 /* Resources */,
-				0CE263C8298F6BF400660514 /* Storyboard */,
+				0CE263C9298F6C2400660514 /* MainFlow */,
 			);
 			path = "SF6-Millioner";
 			sourceTree = "<group>";
@@ -95,14 +92,6 @@
 				0CE263C0298F6B2F00660514 /* Info.plist */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		0CE263C8298F6BF400660514 /* Storyboard */ = {
-			isa = PBXGroup;
-			children = (
-				0CE263B8298F6B2B00660514 /* Main.storyboard */,
-			);
-			path = Storyboard;
 			sourceTree = "<group>";
 		};
 		0CE263C9298F6C2400660514 /* MainFlow */ = {
@@ -236,7 +225,6 @@
 				0CE263BC298F6B2F00660514 /* Assets.xcassets in Resources */,
 				0CE263DC298F6ECF00660514 /* answerTrue.mp3 in Resources */,
 				0CE263DB298F6ECF00660514 /* checkAnswer.mp3 in Resources */,
-				0CE263BA298F6B2B00660514 /* Main.storyboard in Resources */,
 				0CE263D1298F6DE000660514 /* Guidelines in Resources */,
 				0CE263D9298F6ECF00660514 /* victory.mp3 in Resources */,
 				0CE263DA298F6ECF00660514 /* timerSound.mp3 in Resources */,
@@ -259,14 +247,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		0CE263B8298F6B2B00660514 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				0CE263B9298F6B2B00660514 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		0CE263BD298F6B2F00660514 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -404,7 +384,6 @@
 				INFOPLIST_FILE = "SF6-Millioner/Resources/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -436,7 +415,6 @@
 				INFOPLIST_FILE = "SF6-Millioner/Resources/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
