@@ -60,15 +60,19 @@ final class FinishViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        initSubviews()
+        setupResultLabel()
+        setupFailAttemptLabel()
+        setupConstraints()
+    }
+    
+    private func initSubviews() {
         self.view.insertSubview(background, at: 0)
         self.view.addSubview(logoImageView)
         self.view.addSubview(failAttemptLabel)
         self.view.addSubview(resultLabel)
         self.view.addSubview(playAgainButton)
-        
-        setupResultLabel()
-        setupFailAttemptLabel()
-        setupConstraints()
     }
     
     private func setupFailAttemptLabel() {
