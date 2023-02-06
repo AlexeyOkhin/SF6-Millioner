@@ -8,7 +8,7 @@
 import UIKit
 
 extension UILabel {
-    convenience init(name: String, font: UIFont? = .sfPro16Bold()) {
+    convenience init(name: String, font: UIFont? = .systemFont(ofSize: 20)) {
         self.init()
         self.text = name
         self.font = font
