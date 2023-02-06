@@ -1,0 +1,140 @@
+//
+//  FinishViewController.swift
+//  SF6-Millioner
+//
+//  Created by Ilsaf Nabiullin on 05.02.2023.
+//
+
+import UIKit
+
+extension UIColor {
+    convenience init(hexString: String, alpha: CGFloat = 1) {
+        let chars = Array(hexString.dropFirst())
+        self.init(red:   .init(strtoul(String(chars[0...1]),nil,16))/255,
+                  green: .init(strtoul(String(chars[2...3]),nil,16))/255,
+                  blue:  .init(strtoul(String(chars[4...5]),nil,16))/255,
+                  alpha: alpha)}
+}
+
+class FinishViewController: UIViewController {
+    
+    var failAttempt = 0
+    var isWin = false
+    var money = 0
+    
+    var logoImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "Logo")
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    var failAttemptLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor.white
+        label.font = UIFont.systemFont(ofSize: 24)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        return label
+    }()
+    
+    var resultLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 42)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        return label
+    }()
+    
+    var playAgainButton: UIButton = {
+        let button = UIButton(frame: CGRect(x: 20, y: 500, width: 300, height: 100))
+        button.backgroundColor = UIColor(hexString: "#34B83A")
+        button.setTitle("PLAY AGAIN", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 30, weight: .bold)
+        button.layer.cornerRadius = CGFloat(20)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        button.addTarget(FinishViewController.self, action: #selector(playAgainPressed), for: .touchUpInside)
+        
+        return button
+    }()
+    
+    var background: UIImageView = {
+        let imageView = UIImageView(frame: .zero)
+        imageView.image = UIImage(named: "background")
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.view.insertSubview(background, at: 0)
+        self.view.addSubview(logoImageView)
+        self.view.addSubview(failAttemptLabel)
+        self.view.addSubview(resultLabel)
+        self.view.addSubview(playAgainButton)
+        
+        setupResultLabel()
+        setupFailAttemptLabel()
+        setupConstraints()
+    }
+    
+    func setupFailAttemptLabel() {
+        if isWin {
+            failAttemptLabel.text = "You won \(money) RUB"
+        } else {
+            failAttemptLabel.text = "You losed on \(failAttempt) attempt"
+        }
+    }
+    
+    func setupResultLabel() {
+        if isWin {
+            resultLabel.text = "WIN"
+            resultLabel.textColor = UIColor.green
+        } else {
+            resultLabel.text = "LOSE"
+            resultLabel.textColor = UIColor(hexString: "#F66324")
+        }
+    }
+    
+    func setupConstraints() {
+        NSLayoutConstraint.activate([
+            logoImageView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            logoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 19),
+            logoImageView.heightAnchor.constraint(equalToConstant: 201),
+            logoImageView.widthAnchor.constraint(equalToConstant: 201)
+        ])
+        
+        NSLayoutConstraint.activate([
+            failAttemptLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            failAttemptLabel.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 5),
+            failAttemptLabel.heightAnchor.constraint(equalToConstant: 42),
+        ])
+
+        NSLayoutConstraint.activate([
+            resultLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            resultLabel.topAnchor.constraint(equalTo: failAttemptLabel.bottomAnchor),
+            resultLabel.heightAnchor.constraint(equalToConstant: 87),
+        ])
+
+        NSLayoutConstraint.activate([
+            playAgainButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            playAgainButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -84),
+            playAgainButton.widthAnchor.constraint(equalToConstant: 300),
+            playAgainButton.heightAnchor.constraint(equalToConstant: 100)
+        ])
+
+        NSLayoutConstraint.activate([
+            background.topAnchor.constraint(equalTo: view.topAnchor),
+            background.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            background.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            background.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+
+        ])
+    }
+    
+    @objc func playAgainPressed() {
+        // TODO: Вернуться на начало игры.
+        print("Pressed!")
+    }
+}
