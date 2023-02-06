@@ -46,7 +46,7 @@ final class FinishViewController: UIViewController {
         button.layer.cornerRadius = CGFloat(20)
         button.translatesAutoresizingMaskIntoConstraints = false
         
-        button.addTarget(FinishViewController.self, action: #selector(playAgainPressed), for: .touchUpInside)
+        button.addTarget(self, action: #selector(playAgainPressed), for: .touchUpInside)
         
         return button
     }()
