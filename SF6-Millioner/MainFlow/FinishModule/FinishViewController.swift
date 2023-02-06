@@ -10,18 +10,18 @@ import UIKit
 
 final class FinishViewController: UIViewController {
     
-    var failAttempt = 0
-    var isWin = false
-    var money = 0
+    private var failAttempt = 0
+    private var isWin = false
+    private var money = 0
     
-    var logoImageView: UIImageView = {
+    private var logoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "Logo")
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
-    var failAttemptLabel: UILabel = {
+    private var failAttemptLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.white
         label.font = UIFont.systemFont(ofSize: 24)
@@ -30,7 +30,7 @@ final class FinishViewController: UIViewController {
         return label
     }()
     
-    var resultLabel: UILabel = {
+    private var resultLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 42)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -38,7 +38,7 @@ final class FinishViewController: UIViewController {
         return label
     }()
     
-    var playAgainButton: UIButton = {
+    private var playAgainButton: UIButton = {
         let button = UIButton(frame: CGRect(x: 20, y: 500, width: 300, height: 100))
         button.backgroundColor = UIColor(hexString: "#34B83A")
         button.setTitle("PLAY AGAIN", for: .normal)
@@ -51,7 +51,7 @@ final class FinishViewController: UIViewController {
         return button
     }()
     
-    var background: UIImageView = {
+    private var background: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         imageView.image = UIImage(named: "background")
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -71,7 +71,7 @@ final class FinishViewController: UIViewController {
         setupConstraints()
     }
     
-    func setupFailAttemptLabel() {
+    private func setupFailAttemptLabel() {
         if isWin {
             failAttemptLabel.text = "You won \(money) RUB"
         } else {
@@ -79,7 +79,7 @@ final class FinishViewController: UIViewController {
         }
     }
     
-    func setupResultLabel() {
+    private func setupResultLabel() {
         if isWin {
             resultLabel.text = "WIN"
             resultLabel.textColor = UIColor.green
@@ -89,7 +89,7 @@ final class FinishViewController: UIViewController {
         }
     }
     
-    func setupConstraints() {
+    private func setupConstraints() {
         NSLayoutConstraint.activate([
             logoImageView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             logoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 19),
@@ -125,7 +125,7 @@ final class FinishViewController: UIViewController {
         ])
     }
     
-    @objc func playAgainPressed() {
+    @objc private func playAgainPressed() {
         // TODO: Вернуться на начало игры.
         print("Pressed!")
     }
