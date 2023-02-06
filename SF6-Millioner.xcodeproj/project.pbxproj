@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C96A74E29914F4D00D7FA79 /* UiColor + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C96A74D29914F4D00D7FA79 /* UiColor + Extension.swift */; };
+		0C96A753299152F300D7FA79 /* ModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C96A752299152F300D7FA79 /* ModuleBuilder.swift */; };
+		0C96A755299153E100D7FA79 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C96A754299153E100D7FA79 /* RegisterViewController.swift */; };
 		0CE263B3298F6B2B00660514 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE263B2298F6B2B00660514 /* AppDelegate.swift */; };
 		0CE263B5298F6B2B00660514 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE263B4298F6B2B00660514 /* SceneDelegate.swift */; };
 		0CE263B7298F6B2B00660514 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE263B6298F6B2B00660514 /* MainViewController.swift */; };
@@ -21,6 +24,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0C96A74D29914F4D00D7FA79 /* UiColor + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UiColor + Extension.swift"; sourceTree = "<group>"; };
+		0C96A752299152F300D7FA79 /* ModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleBuilder.swift; sourceTree = "<group>"; };
+		0C96A754299153E100D7FA79 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		0CE263AF298F6B2B00660514 /* SF6-Millioner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SF6-Millioner.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CE263B2298F6B2B00660514 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0CE263B4298F6B2B00660514 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -47,6 +53,46 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0C96A74A29914F1100D7FA79 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				0C96A74C29914F3400D7FA79 /* Elements */,
+				0C96A74B29914F2300D7FA79 /* UIKit */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		0C96A74B29914F2300D7FA79 /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				0C96A74D29914F4D00D7FA79 /* UiColor + Extension.swift */,
+			);
+			path = UIKit;
+			sourceTree = "<group>";
+		};
+		0C96A74C29914F3400D7FA79 /* Elements */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Elements;
+			sourceTree = "<group>";
+		};
+		0C96A74F29914F7D00D7FA79 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				0C96A75029914F8800D7FA79 /* ModuleBuilder */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		0C96A75029914F8800D7FA79 /* ModuleBuilder */ = {
+			isa = PBXGroup;
+			children = (
+				0C96A752299152F300D7FA79 /* ModuleBuilder.swift */,
+			);
+			path = ModuleBuilder;
+			sourceTree = "<group>";
+		};
 		0CE263A6298F6B2B00660514 = {
 			isa = PBXGroup;
 			children = (
@@ -66,6 +112,8 @@
 		0CE263B1298F6B2B00660514 /* SF6-Millioner */ = {
 			isa = PBXGroup;
 			children = (
+				0C96A74F29914F7D00D7FA79 /* Services */,
+				0C96A74A29914F1100D7FA79 /* Extensions */,
 				0CE263D0298F6DE000660514 /* Guidelines */,
 				0CE263C6298F6B7900660514 /* Application */,
 				0CE263C7298F6B8D00660514 /* Resources */,
@@ -118,6 +166,7 @@
 		0CE263CB298F6CC200660514 /* RegisterModule */ = {
 			isa = PBXGroup;
 			children = (
+				0C96A754299153E100D7FA79 /* RegisterViewController.swift */,
 			);
 			path = RegisterModule;
 			sourceTree = "<group>";
@@ -239,7 +288,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				0CE263B7298F6B2B00660514 /* MainViewController.swift in Sources */,
+				0C96A74E29914F4D00D7FA79 /* UiColor + Extension.swift in Sources */,
 				0CE263B3298F6B2B00660514 /* AppDelegate.swift in Sources */,
+				0C96A755299153E100D7FA79 /* RegisterViewController.swift in Sources */,
+				0C96A753299152F300D7FA79 /* ModuleBuilder.swift in Sources */,
 				0CE263B5298F6B2B00660514 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
