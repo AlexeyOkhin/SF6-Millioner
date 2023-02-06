@@ -10,9 +10,20 @@ import UIKit
 
 final class FinishViewController: UIViewController {
     
-    private var failAttempt = 0
-    private var isWin = false
-    private var money = 0
+    private var failAttempt: Int?
+    private var isWin: Bool?
+    private var money: Int?
+    
+    init(failAttempt: Int, isWin: Bool, money: Int) {
+        self.failAttempt = failAttempt
+        self.isWin = isWin
+        self.money = money
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
     
     private var logoImageView: UIImageView = {
         let imageView = UIImageView()
@@ -76,15 +87,15 @@ final class FinishViewController: UIViewController {
     }
     
     private func setupFailAttemptLabel() {
-        if isWin {
-            failAttemptLabel.text = "You won \(money) RUB"
+        if isWin! {
+            failAttemptLabel.text = "You won \(money!) RUB"
         } else {
-            failAttemptLabel.text = "You losed on \(failAttempt) attempt"
+            failAttemptLabel.text = "You losed on \(failAttempt!) attempt"
         }
     }
     
     private func setupResultLabel() {
-        if isWin {
+        if isWin! {
             resultLabel.text = "WIN"
             resultLabel.textColor = UIColor.green
         } else {
