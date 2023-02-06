@@ -8,7 +8,7 @@
 import UIKit
 
 
-class FinishViewController: UIViewController {
+final class FinishViewController: UIViewController {
     
     var failAttempt = 0
     var isWin = false
