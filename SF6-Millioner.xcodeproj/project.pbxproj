@@ -18,7 +18,7 @@
 		0CE263DA298F6ECF00660514 /* timerSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0CE263D5298F6ECF00660514 /* timerSound.mp3 */; };
 		0CE263DB298F6ECF00660514 /* checkAnswer.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0CE263D6298F6ECF00660514 /* checkAnswer.mp3 */; };
 		0CE263DC298F6ECF00660514 /* answerTrue.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0CE263D7298F6ECF00660514 /* answerTrue.mp3 */; };
-		CDE03EC32990263900877CB0 /* FinishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE03EC22990263900877CB0 /* FinishViewController.swift */; };
+		CDD6047D2991622100D0B041 /* FinishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD6047C2991622100D0B041 /* FinishViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,7 +35,7 @@
 		0CE263D5298F6ECF00660514 /* timerSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = timerSound.mp3; sourceTree = "<group>"; };
 		0CE263D6298F6ECF00660514 /* checkAnswer.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = checkAnswer.mp3; sourceTree = "<group>"; };
 		0CE263D7298F6ECF00660514 /* answerTrue.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = answerTrue.mp3; sourceTree = "<group>"; };
-		CDE03EC22990263900877CB0 /* FinishViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishViewController.swift; sourceTree = "<group>"; };
+		CDD6047C2991622100D0B041 /* FinishViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FinishViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,9 +148,9 @@
 		0CE263CF298F6DCC00660514 /* FinishModule */ = {
 			isa = PBXGroup;
 			children = (
-				CDE03EC22990263900877CB0 /* FinishViewController.swift */,
+				CDD6047C2991622100D0B041 /* FinishViewController.swift */,
 			);
-			name = FinishModule;
+			path = FinishModule;
 			sourceTree = "<group>";
 		};
 		0CE263D2298F6ECF00660514 /* sounds */ = {
@@ -242,7 +242,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0CE263B7298F6B2B00660514 /* MainViewController.swift in Sources */,
-				CDE03EC32990263900877CB0 /* FinishViewController.swift in Sources */,
+				CDD6047D2991622100D0B041 /* FinishViewController.swift in Sources */,
 				0CE263B3298F6B2B00660514 /* AppDelegate.swift in Sources */,
 				0CE263B5298F6B2B00660514 /* SceneDelegate.swift in Sources */,
 			);
