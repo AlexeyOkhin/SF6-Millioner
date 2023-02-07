@@ -41,7 +41,7 @@ class RuleViewController: UIViewController{
         let myAttribute = [ NSAttributedString.Key.font: UIFont.systemFont(ofSize: 21, weight: .regular),
                             NSAttributedString.Key.foregroundColor: UIColor.white,
                             ]
-        let myString = NSMutableAttributedString(string: "Для победы вам необходимо правильно ответить на 15 вопросов.\n\nКаждый вопрос имеет четыре варианта ответа, лишь одни является верным.\n\nТри несгораемых суммы:\n- 1000 RUB \n- 32000 RUB \n- 1000000 RUB\n\nТри подсказки: \n- 50/50: удалятся два неверных ответа. \n- Помощь зала: предложит возможный вариант по мнению зала.\n-Звонок другу: предложит наиболее вероятный ответ.\n\nВы можете забрать сумму в любой момент, пока не ответили неверно.", attributes: myAttribute )
+        let myString = NSMutableAttributedString(string: "Для победы вам необходимо правильно ответить на 15 вопросов.\n\nКаждый вопрос имеет четыре варианта ответа, лишь одни является верным.\n\nТри несгораемых суммы:\n- 1000 RUB \n- 32000 RUB \n- 1000000 RUB\n\nТри подсказки: \n- 50/50: удалятся два неверных ответа. \n- Помощь зала: предложит возможный вариант по мнению зала.\n-Звонок другу: предложит наиболее вероятный ответ.", attributes: myAttribute )
         var anotherAttribute = [ NSAttributedString.Key.font: UIFont.systemFont(ofSize: 22, weight: .bold),
                                  NSAttributedString.Key.foregroundColor: UIColor.green,
                                  ]
