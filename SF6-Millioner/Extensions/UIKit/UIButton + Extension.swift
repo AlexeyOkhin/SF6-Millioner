@@ -12,8 +12,7 @@ extension UIButton {
                     backgroundCollor: UIColor,
                     titleColor: UIColor,
                     cornerRadius: CGFloat,
-                     font: UIFont? = .systemFont(ofSize: 18)) {
-        
+                    font: UIFont? = .systemFont(ofSize: 18)) {
         self.init(type: .system)
         self.setTitle(title, for: .normal)
         self.setTitleColor(titleColor, for: .normal)
