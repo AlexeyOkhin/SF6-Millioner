@@ -94,7 +94,7 @@ class GameViewController: UIViewController {
         button.setTitle("D", for: .normal)
         button.layer.cornerRadius = CGFloat(20)
         button.translatesAutoresizingMaskIntoConstraints = false
-        
+        button.addTarget(self, action: #selector(showResult), for: .touchUpInside)
         return button
     }()
     
@@ -132,6 +132,11 @@ class GameViewController: UIViewController {
             
         initSubviews()
         setupConstraints()
+    }
+
+    @objc private func showResult() {
+        let resultVC = FinishViewController(failAttempt: 10, isWin: true, money: 1000)
+        navigationController?.pushViewController(resultVC, animated: true)
     }
     
     private func initSubviews() {
@@ -210,26 +215,42 @@ class GameViewController: UIViewController {
             answerDButton.widthAnchor.constraint(equalToConstant: 321),
             answerDButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
-        
+
+        let stackView = UIStackView(arrangedSubviews: [fiftyFifty, hallHelp, callFriend])
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        stackView.spacing = 10
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+
+        view.addSubview(stackView)
+
         NSLayoutConstraint.activate([
-            fiftyFifty.topAnchor.constraint(equalTo: answerDButton.bottomAnchor, constant: 60),
-            fiftyFifty.heightAnchor.constraint(equalToConstant: 81),
-            fiftyFifty.widthAnchor.constraint(equalToConstant: 105),
-            fiftyFifty.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 25)
+            stackView.topAnchor.constraint(equalTo: answerDButton.bottomAnchor, constant: 30),
+            stackView.heightAnchor.constraint(equalToConstant: 80),
+            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
+
         
-        NSLayoutConstraint.activate([
-            hallHelp.topAnchor.constraint(equalTo: answerDButton.bottomAnchor, constant: 60),
-            hallHelp.heightAnchor.constraint(equalToConstant: 81),
-            hallHelp.widthAnchor.constraint(equalToConstant: 105),
-            hallHelp.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ])
-        
-        NSLayoutConstraint.activate([
-            callFriend.topAnchor.constraint(equalTo: answerDButton.bottomAnchor, constant: 60),
-            callFriend.heightAnchor.constraint(equalToConstant: 81),
-            callFriend.widthAnchor.constraint(equalToConstant: 105),
-            callFriend.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -25)
-        ])
+//        NSLayoutConstraint.activate([
+//            fiftyFifty.topAnchor.constraint(equalTo: answerDButton.bottomAnchor, constant: 60),
+//            fiftyFifty.heightAnchor.constraint(equalToConstant: 81),
+//            fiftyFifty.widthAnchor.constraint(equalToConstant: 105),
+//            fiftyFifty.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 25)
+//        ])
+//
+//        NSLayoutConstraint.activate([
+//            hallHelp.topAnchor.constraint(equalTo: answerDButton.bottomAnchor, constant: 60),
+//            hallHelp.heightAnchor.constraint(equalToConstant: 81),
+//            hallHelp.widthAnchor.constraint(equalToConstant: 105),
+//            hallHelp.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+//        ])
+//
+//        NSLayoutConstraint.activate([
+//            callFriend.topAnchor.constraint(equalTo: answerDButton.bottomAnchor, constant: 60),
+//            callFriend.heightAnchor.constraint(equalToConstant: 81),
+//            callFriend.widthAnchor.constraint(equalToConstant: 105),
+//            callFriend.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -25)
+//        ])
     }
 }

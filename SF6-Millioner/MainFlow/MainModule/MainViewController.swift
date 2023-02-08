@@ -85,10 +85,14 @@ class MainViewController: UIViewController {
     }
     
     @objc private func rulesButtonTapped() {
+        let rulesVC = RuleViewController()
+        navigationController?.pushViewController(rulesVC, animated: true)
         print("Rules")
     }
     
     @objc private func startButtonTapped() {
+        let gameVC = GameViewController()
+        navigationController?.pushViewController(gameVC, animated: true)
         print("Start")
     }
 
