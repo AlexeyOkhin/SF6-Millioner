@@ -26,7 +26,11 @@
 		0CE263DA298F6ECF00660514 /* timerSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0CE263D5298F6ECF00660514 /* timerSound.mp3 */; };
 		0CE263DB298F6ECF00660514 /* checkAnswer.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0CE263D6298F6ECF00660514 /* checkAnswer.mp3 */; };
 		0CE263DC298F6ECF00660514 /* answerTrue.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0CE263D7298F6ECF00660514 /* answerTrue.mp3 */; };
+
+		883B93BD299292A800F421B9 /* RulesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883B93BC299292A800F421B9 /* RulesViewController.swift */; };
+
 		CDD6047D2991622100D0B041 /* FinishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD6047C2991622100D0B041 /* FinishViewController.swift */; };
+
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,7 +55,11 @@
 		0CE263D5298F6ECF00660514 /* timerSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = timerSound.mp3; sourceTree = "<group>"; };
 		0CE263D6298F6ECF00660514 /* checkAnswer.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = checkAnswer.mp3; sourceTree = "<group>"; };
 		0CE263D7298F6ECF00660514 /* answerTrue.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = answerTrue.mp3; sourceTree = "<group>"; };
+
+		883B93BC299292A800F421B9 /* RulesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesViewController.swift; sourceTree = "<group>"; };
+
 		CDD6047C2991622100D0B041 /* FinishViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FinishViewController.swift; sourceTree = "<group>"; };
+
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,6 +214,7 @@
 		0CE263CD298F6CDF00660514 /* RulesGameModule */ = {
 			isa = PBXGroup;
 			children = (
+				883B93BC299292A800F421B9 /* RulesViewController.swift */,
 			);
 			path = RulesGameModule;
 			sourceTree = "<group>";
@@ -324,6 +333,7 @@
 				0C96A75E29915DFB00D7FA79 /* Bundle + extension.swift in Sources */,
 				0C96A76029915E1800D7FA79 /* UILabel + Extension.swift in Sources */,
 				0CE263B5298F6B2B00660514 /* SceneDelegate.swift in Sources */,
+				883B93BD299292A800F421B9 /* RulesViewController.swift in Sources */,
 				0C96A758299154D800D7FA79 /* HiScoreStorage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
