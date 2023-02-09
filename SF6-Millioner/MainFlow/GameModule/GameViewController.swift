@@ -155,7 +155,7 @@ class GameViewController: UIViewController {
     }
 
     @objc private func showResult() {
-        let resultVC = FinishViewController(failAttempt: 10, isWin: true, money: 1000)
+        let resultVC = ResultViewController(level: game.level, costQuestion: game.costQuestion)
         navigationController?.pushViewController(resultVC, animated: true)
     }
 
@@ -179,10 +179,7 @@ class GameViewController: UIViewController {
     @objc private func callFriendPressed() {
         showAlert(title: "Друг считает что это:", message: game.showHallHelp(persent: 80))
     }
-
-
-
-
+    
     private func settingNavigationBar() {
         navigationItem.backButtonTitle = "Назад"
     }
