@@ -129,7 +129,8 @@ class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-            
+
+        settingNavigationBar()
         initSubviews()
         setupConstraints()
     }
@@ -137,6 +138,10 @@ class GameViewController: UIViewController {
     @objc private func showResult() {
         let resultVC = FinishViewController(failAttempt: 10, isWin: true, money: 1000)
         navigationController?.pushViewController(resultVC, animated: true)
+    }
+
+    private func settingNavigationBar() {
+        navigationItem.backButtonTitle = "Назад"
     }
     
     private func initSubviews() {

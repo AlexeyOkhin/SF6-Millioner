@@ -69,12 +69,18 @@ class MainViewController: UIViewController {
     //MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        settingNavigationBar()
         setupView()
         setConstraints()
     }
 
     //MARK: - Private Methods
+    
+    private func settingNavigationBar() {
+        navigationItem.backButtonTitle = "Назад"
+        navigationController?.navigationBar.tintColor = .white
+    }
+
     private func setupView() {
         view.addSubview(backgroundImageView)
         view.addSubview(logoImageView)
