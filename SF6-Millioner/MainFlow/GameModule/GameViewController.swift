@@ -10,6 +10,8 @@ import UIKit
 class GameViewController: UIViewController {
 
     //MARK: - Private Properties
+    private let game = Game(nameGamer: "ad", fireproofAmount: 2)
+    
     private var logoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "Logo")
@@ -105,6 +107,8 @@ class GameViewController: UIViewController {
         button.layer.cornerRadius = CGFloat(20)
         button.translatesAutoresizingMaskIntoConstraints = false
         
+        button.addTarget(self, action: #selector(fiftyFiftyPressed), for: .touchUpInside)
+
         return button
     }()
     
@@ -142,6 +146,19 @@ class GameViewController: UIViewController {
 
     private func settingNavigationBar() {
         navigationItem.backButtonTitle = "Назад"
+    }
+    
+    @objc private func fiftyFiftyPressed() {
+        let a = game.showFiftyFifty()
+        let answers = [a.0, a.1]
+        let buttons = [answerAButton, answerBButton, answerCButton, answerDButton]
+        
+        for button in buttons {
+            if !answers.contains(button.currentTitle!) {
+                button.isEnabled = false
+                button.alpha = 0.5
+            }
+        }
     }
     
     private func initSubviews() {

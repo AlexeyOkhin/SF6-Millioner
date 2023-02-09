@@ -7,11 +7,18 @@
 
 import Foundation
 
-struct Question: Decodable {
+class Question: Decodable {
     let level: Int
     let ask: String
     let correctAnswer: String
-    let wrongAnswers: [String]
+    var wrongAnswers: [String]
+    
+    init(level: Int, ask: String, correctAnswer: String, wrongAnswers: [String]) {
+        self.level = level
+        self.ask = ask
+        self.correctAnswer = correctAnswer
+        self.wrongAnswers = wrongAnswers
+    }
 }
 
 struct Game {
@@ -40,8 +47,8 @@ struct Game {
         return answer == currentQuestion.correctAnswer
     }
 
-    func showFiftyFifty() {
-
+    func showFiftyFifty() -> (String, String) {
+        return (currentQuestion.correctAnswer, Array(currentQuestion.wrongAnswers.shuffled())[0])
     }
 
     func showHallHelp(persent: Int) -> String {
