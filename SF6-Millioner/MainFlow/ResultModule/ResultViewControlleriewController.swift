@@ -1,5 +1,5 @@
 //
-//  HiScoreViewController.swift
+//  ResultViewController.swift
 //  SF6-Millioner
 //
 //  Created by Djinsolobzik on 09.02.2023.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class HiScoreViewController: UIViewController {
+final class ResultViewController: UIViewController {
     private let mainStackView = UIStackView()
     private var paddingView = [UIView]()
     private var rectangleImages = Array(repeating: UIImageView(), count: 15)
@@ -39,7 +39,7 @@ final class HiScoreViewController: UIViewController {
     }
 }
 
-private extension HiScoreViewController {
+private extension ResultViewController {
     func applyStyle() {
         for i in rangeForRow {
             let newView = UIView()
