@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0C1EAC34299420CC009F061F /* UIViewControler + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1EAC33299420CC009F061F /* UIViewControler + Extension.swift */; };
+		0C1EAC38299483C2009F061F /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1EAC37299483C2009F061F /* GameModel.swift */; };
 		0C96A74E29914F4D00D7FA79 /* UiColor + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C96A74D29914F4D00D7FA79 /* UiColor + Extension.swift */; };
 		0C96A753299152F300D7FA79 /* ModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C96A752299152F300D7FA79 /* ModuleBuilder.swift */; };
 		0C96A755299153E100D7FA79 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C96A754299153E100D7FA79 /* RegisterViewController.swift */; };
@@ -34,6 +35,7 @@
 
 /* Begin PBXFileReference section */
 		0C1EAC33299420CC009F061F /* UIViewControler + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewControler + Extension.swift"; sourceTree = "<group>"; };
+		0C1EAC37299483C2009F061F /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
 		0C96A74D29914F4D00D7FA79 /* UiColor + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UiColor + Extension.swift"; sourceTree = "<group>"; };
 		0C96A752299152F300D7FA79 /* ModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleBuilder.swift; sourceTree = "<group>"; };
 		0C96A754299153E100D7FA79 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
@@ -207,6 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				639AD79F2993E57000B15AD1 /* GameViewController.swift */,
+				0C1EAC37299483C2009F061F /* GameModel.swift */,
 			);
 			path = GameModule;
 			sourceTree = "<group>";
@@ -328,6 +331,7 @@
 				0C96A74E29914F4D00D7FA79 /* UiColor + Extension.swift in Sources */,
 				0CE263B3298F6B2B00660514 /* AppDelegate.swift in Sources */,
 				0C96A755299153E100D7FA79 /* RegisterViewController.swift in Sources */,
+				0C1EAC38299483C2009F061F /* GameModel.swift in Sources */,
 				0C96A753299152F300D7FA79 /* ModuleBuilder.swift in Sources */,
 				0C96A76229915E2500D7FA79 /* UIButton + Extension.swift in Sources */,
 				0C96A75E29915DFB00D7FA79 /* Bundle + extension.swift in Sources */,
