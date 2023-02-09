@@ -116,7 +116,7 @@ class GameViewController: UIViewController {
         button.setBackgroundImage(UIImage(named: "hallHelp"), for: .normal)
         button.layer.cornerRadius = CGFloat(20)
         button.translatesAutoresizingMaskIntoConstraints = false
-        
+        button.addTarget(self, action: #selector(hallHelpPressed), for: .touchUpInside)
         return button
     }()
     
@@ -125,7 +125,7 @@ class GameViewController: UIViewController {
         button.setBackgroundImage(UIImage(named: "callFriend"), for: .normal)
         button.layer.cornerRadius = CGFloat(20)
         button.translatesAutoresizingMaskIntoConstraints = false
-        
+        button.addTarget(self, action: #selector(callFriendPressed), for: .touchUpInside)
         return button
     }()
     
@@ -171,6 +171,17 @@ class GameViewController: UIViewController {
             }
         }
     }
+
+    @objc private func hallHelpPressed() {
+        showAlert(title: "Зал выбрал ответ:", message: game.showHallHelp(persent: 70))
+    }
+
+    @objc private func callFriendPressed() {
+        showAlert(title: "Друг считает что это:", message: game.showHallHelp(persent: 80))
+    }
+
+
+
 
     private func settingNavigationBar() {
         navigationItem.backButtonTitle = "Назад"
