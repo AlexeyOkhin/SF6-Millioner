@@ -1,8 +1,8 @@
 //
 //  UIButton + Extension.swift
-//  VKAllCups
+//  SF6-Millioner
 //
-//  Created by Djinsolobzik on 03.12.2022.
+//  Created by Djinsolobzik on 06.02.2023.
 //
 
 import UIKit
