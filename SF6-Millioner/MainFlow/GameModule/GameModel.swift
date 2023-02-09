@@ -12,6 +12,8 @@ struct Question: Decodable {
     let ask: String
     let correctAnswer: String
     let wrongAnswers: [String]
+    var cost: String?
+
 }
 
 struct Game {
@@ -26,10 +28,13 @@ struct Game {
     var questions = Bundle.main.decode([Question].self, from: "questions.json").shuffled()
     var isWin = false
     var usedRighteToMistake = true
+    let costQuestion = ["100", "200", "300", "500", "1000", "2000", "4000", "8000", "16000", "32000", "64000", "128000", "256000", "500000", "1 Миллион"]
 
 
     var currentQuestion: Question {
-        return questions.first { $0.level == level } ?? Question(level: 1, ask: "Нет Вопросов(", correctAnswer: "?", wrongAnswers: ["?", "?", "?"])
+        var question = questions.first { $0.level == level } ?? Question(level: 1, ask: "Нет Вопросов(", correctAnswer: "?", wrongAnswers: ["?", "?", "?"])
+        question.cost = costQuestion[level - 1]
+        return question
     }
 
     mutating func nextLevel() {
@@ -40,8 +45,10 @@ struct Game {
         return answer == currentQuestion.correctAnswer
     }
 
-    func showFiftyFifty() {
-
+    func showFiftyFifty() -> (String, String) {
+        let correctAnswer = currentQuestion.correctAnswer
+        let wrongAnswer = currentQuestion.wrongAnswers.randomElement()!
+        return (correctAnswer, wrongAnswer)
     }
 
     func showHallHelp(persent: Int) -> String {

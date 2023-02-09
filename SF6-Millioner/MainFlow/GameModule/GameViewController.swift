@@ -8,6 +8,9 @@
 import UIKit
 
 class GameViewController: UIViewController {
+    //MARK: - Properties
+
+    var game = Game(nameGamer: "Алексей", fireproofAmount: 0)
 
     //MARK: - Private Properties
     private var logoImageView: UIImageView = {
@@ -104,7 +107,7 @@ class GameViewController: UIViewController {
         button.setBackgroundImage(UIImage(named: "fiftyFifty"), for: .normal)
         button.layer.cornerRadius = CGFloat(20)
         button.translatesAutoresizingMaskIntoConstraints = false
-        
+        button.addTarget(self, action: #selector(fiftyFiftyPressed), for: .touchUpInside)
         return button
     }()
     
@@ -133,11 +136,40 @@ class GameViewController: UIViewController {
         settingNavigationBar()
         initSubviews()
         setupConstraints()
+        startGame()
+    }
+
+    func startGame() {
+        questionLabel.text = game.currentQuestion.ask
+        questionNumberLabel.text = "Question \(game.level)"
+        scoreLabel.text = "\(game.currentQuestion.cost ?? "0") RUB"
+        setTitleAnswer()
+    }
+
+    func setTitleAnswer() {
+        let buttons = [answerAButton, answerBButton, answerCButton, answerDButton].shuffled()
+        let answers = game.currentQuestion.wrongAnswers + [game.currentQuestion.correctAnswer]
+        for (num, button) in buttons.enumerated() {
+            button.setTitle(answers[num], for: .normal)
+        }
     }
 
     @objc private func showResult() {
         let resultVC = FinishViewController(failAttempt: 10, isWin: true, money: 1000)
         navigationController?.pushViewController(resultVC, animated: true)
+    }
+
+    @objc private func fiftyFiftyPressed() {
+        let a = game.showFiftyFifty()
+        let answers = [a.0, a.1]
+        let buttons = [answerAButton, answerBButton, answerCButton, answerDButton]
+
+        for button in buttons {
+            if !answers.contains(button.currentTitle!) {
+                button.isEnabled = false
+                button.alpha = 0.5
+            }
+        }
     }
 
     private func settingNavigationBar() {
