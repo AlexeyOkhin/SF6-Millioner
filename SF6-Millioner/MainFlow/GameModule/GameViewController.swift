@@ -8,6 +8,8 @@
 import UIKit
 
 class GameViewController: UIViewController {
+    
+    var timer: Timer?
 
     //MARK: - Private Properties
     private var logoImageView: UIImageView = {
@@ -55,6 +57,18 @@ class GameViewController: UIViewController {
         labelView.textAlignment = .center
         labelView.translatesAutoresizingMaskIntoConstraints = false
         return labelView
+    }()
+    
+    private var progressBar: UIProgressView = {
+        let progress = UIProgressView()
+        progress.progressViewStyle = .bar
+        progress.progress = 0.5
+        progress.tintColor = UIColor(hexString: "#273A5E")
+        progress.trackTintColor = .lightGray
+        progress.translatesAutoresizingMaskIntoConstraints = false
+        progress.heightAnchor.constraint(equalToConstant: 10).isActive = true
+
+        return progress
     }()
     
     //MARK: - Answer Button
@@ -117,15 +131,23 @@ class GameViewController: UIViewController {
         return button
     }()
     
-    private var callFriend: UIButton = {
+    private var rightToMistake: UIButton = {
         let button = UIButton()
-        button.setBackgroundImage(UIImage(named: "callFriend"), for: .normal)
+        button.setBackgroundImage(UIImage(named: "rightToMistake"), for: .normal)
         button.layer.cornerRadius = CGFloat(20)
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
     }()
     
+    private var takeCash: UIButton = {
+        let button = UIButton()
+        button.layer.cornerRadius = CGFloat(20)
+        button.setBackgroundImage(UIImage(named: "takeCash"), for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+
+        return button
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -148,8 +170,11 @@ class GameViewController: UIViewController {
         self.view.insertSubview(background, at: 0)
         self.view.addSubview(logoImageView)
         self.view.addSubview(questionLabel)
+        
         self.view.addSubview(questionNumberLabel)
         self.view.addSubview(scoreLabel)
+        
+        self.view.addSubview(progressBar)
         
         self.view.addSubview(answerAButton)
         self.view.addSubview(answerBButton)
@@ -158,17 +183,13 @@ class GameViewController: UIViewController {
         
         self.view.addSubview(fiftyFifty)
         self.view.addSubview(hallHelp)
-        self.view.addSubview(callFriend)
+        self.view.addSubview(rightToMistake)
+        
+        self.view.addSubview(takeCash)
     }
     
     //MARK: - Setup Constraints
     private func setupConstraints(){
-        NSLayoutConstraint.activate([
-            logoImageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 18),
-            logoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 19),
-            logoImageView.heightAnchor.constraint(equalToConstant: 87),
-            logoImageView.widthAnchor.constraint(equalToConstant: 87)
-        ])
         
         NSLayoutConstraint.activate([
             background.topAnchor.constraint(equalTo: view.topAnchor),
@@ -178,84 +199,91 @@ class GameViewController: UIViewController {
         ])
         
         NSLayoutConstraint.activate([
+            logoImageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 18),
+            logoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 19),
+            logoImageView.heightAnchor.constraint(equalToConstant: 87),
+            logoImageView.widthAnchor.constraint(equalToConstant: 87)
+        ])
+
+        NSLayoutConstraint.activate([
             questionLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             questionLabel.leadingAnchor.constraint(equalTo: logoImageView.trailingAnchor, constant: 21),
             questionLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -7)
         ])
         
+        let labelStackView = UIStackView(arrangedSubviews: [questionNumberLabel, scoreLabel])
+        labelStackView.axis = .horizontal
+        labelStackView.distribution = .fillEqually
+        labelStackView.spacing = 100
+        labelStackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(labelStackView)
+        
         NSLayoutConstraint.activate([
-            questionNumberLabel.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 14),
-            questionNumberLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 25)
+            labelStackView.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 14),
+            labelStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            labelStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            labelStackView.heightAnchor.constraint(equalToConstant: 25)
         ])
         
         NSLayoutConstraint.activate([
-            scoreLabel.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 14),
-            scoreLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20)
+            progressBar.topAnchor.constraint(equalTo: labelStackView.bottomAnchor, constant: 10),
+            progressBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            progressBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
         
-        NSLayoutConstraint.activate([
-            answerAButton.topAnchor.constraint(equalTo: questionNumberLabel.bottomAnchor, constant: 40),
-            answerAButton.heightAnchor.constraint(equalToConstant: 54),
-            answerAButton.widthAnchor.constraint(equalToConstant: 321),
-            answerAButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ])
+        //Stack for Answer Button
+        let answerStackView = UIStackView(arrangedSubviews: [answerAButton, answerBButton, answerCButton, answerDButton])
+        answerStackView.axis = .vertical
+        answerStackView.distribution = .fillEqually
+        answerStackView.spacing = 30
+        answerStackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(answerStackView)
         
         NSLayoutConstraint.activate([
-            answerBButton.topAnchor.constraint(equalTo: answerAButton.bottomAnchor, constant: 30),
-            answerBButton.heightAnchor.constraint(equalToConstant: 54),
-            answerBButton.widthAnchor.constraint(equalToConstant: 321),
-            answerBButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            answerStackView.topAnchor.constraint(equalTo: progressBar.bottomAnchor, constant: 20),
+            answerStackView.heightAnchor.constraint(equalToConstant: 336),
+            answerStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            answerStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
         
-        NSLayoutConstraint.activate([
-            answerCButton.topAnchor.constraint(equalTo: answerBButton.bottomAnchor, constant: 30),
-            answerCButton.heightAnchor.constraint(equalToConstant: 54),
-            answerCButton.widthAnchor.constraint(equalToConstant: 321),
-            answerCButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ])
-        
-        NSLayoutConstraint.activate([
-            answerDButton.topAnchor.constraint(equalTo: answerCButton.bottomAnchor, constant: 30),
-            answerDButton.heightAnchor.constraint(equalToConstant: 54),
-            answerDButton.widthAnchor.constraint(equalToConstant: 321),
-            answerDButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ])
+        //Stack for Helps Button
+        let helpStackView = UIStackView(arrangedSubviews: [fiftyFifty, hallHelp, rightToMistake])
+        helpStackView.axis = .horizontal
+        helpStackView.distribution = .fillEqually
+        helpStackView.spacing = 10
+        helpStackView.translatesAutoresizingMaskIntoConstraints = false
 
-        let stackView = UIStackView(arrangedSubviews: [fiftyFifty, hallHelp, callFriend])
-        stackView.axis = .horizontal
-        stackView.distribution = .fillEqually
-        stackView.spacing = 10
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-
-        view.addSubview(stackView)
+        view.addSubview(helpStackView)
 
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: answerDButton.bottomAnchor, constant: 30),
-            stackView.heightAnchor.constraint(equalToConstant: 80),
-            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+            helpStackView.topAnchor.constraint(equalTo: answerStackView.bottomAnchor, constant: 40),
+            helpStackView.heightAnchor.constraint(equalToConstant: 80),
+            helpStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            helpStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
-
+ 
+        NSLayoutConstraint.activate([
+            takeCash.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            takeCash.widthAnchor.constraint(equalToConstant: 50),
+            takeCash.heightAnchor.constraint(equalToConstant: 50)
+        ])
         
-//        NSLayoutConstraint.activate([
-//            fiftyFifty.topAnchor.constraint(equalTo: answerDButton.bottomAnchor, constant: 60),
-//            fiftyFifty.heightAnchor.constraint(equalToConstant: 81),
-//            fiftyFifty.widthAnchor.constraint(equalToConstant: 105),
-//            fiftyFifty.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 25)
-//        ])
-//
-//        NSLayoutConstraint.activate([
-//            hallHelp.topAnchor.constraint(equalTo: answerDButton.bottomAnchor, constant: 60),
-//            hallHelp.heightAnchor.constraint(equalToConstant: 81),
-//            hallHelp.widthAnchor.constraint(equalToConstant: 105),
-//            hallHelp.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-//        ])
-//
-//        NSLayoutConstraint.activate([
-//            callFriend.topAnchor.constraint(equalTo: answerDButton.bottomAnchor, constant: 60),
-//            callFriend.heightAnchor.constraint(equalToConstant: 81),
-//            callFriend.widthAnchor.constraint(equalToConstant: 105),
-//            callFriend.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -25)
-//        ])
+        //Main Stack View Vertical
+        let mainStackView = UIStackView(arrangedSubviews: [labelStackView, progressBar, answerStackView, helpStackView])
+        mainStackView.axis = .vertical
+        mainStackView.distribution = .fill
+        mainStackView.spacing = 30
+        mainStackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(mainStackView)
+        
+        NSLayoutConstraint.activate([
+            mainStackView.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 14),
+            mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            mainStackView.bottomAnchor.constraint(equalTo: takeCash.topAnchor, constant: -10)
+        ])
     }
 }
