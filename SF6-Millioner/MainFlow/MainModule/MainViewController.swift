@@ -30,7 +30,7 @@ class MainViewController: UIViewController {
     
     private let welcomeLabel: UILabel = {
         let label = UILabel()
-        label.text = "Welcome"
+        label.text = "Добро пожаловать!"
         label.textColor = .white
         label.font = .systemFont(ofSize: 24)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -39,7 +39,7 @@ class MainViewController: UIViewController {
     
     private let mainLabel: UILabel = {
         let label = UILabel()
-        label.text = "Who wants to be a millionaire"
+        label.text = "Кто хочет стать миллионером?"
         label.font = .systemFont(ofSize: 34)
         label.numberOfLines = 2
         label.adjustsFontSizeToFitWidth = true
@@ -52,7 +52,7 @@ class MainViewController: UIViewController {
     private lazy var rulesButton: UIButton = {
         let button = UIButton(type: .system)
         button.setBackgroundImage(UIImage(named: "Rectangle blue"), for: .normal)
-        button.setTitle("Rules", for: .normal)
+        button.setTitle("Правила", for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 25)
         button.tintColor = .white
         button.layer.cornerRadius = 15
@@ -64,7 +64,7 @@ class MainViewController: UIViewController {
     private lazy var startButton: UIButton = {
         let button = UIButton(type: .system)
         button.setBackgroundImage(UIImage(named: "Rectangle blue"), for: .normal)
-        button.setTitle("Start", for: .normal)
+        button.setTitle("Старт", for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 25)
         button.tintColor = .white
         button.layer.cornerRadius = 15
@@ -76,7 +76,7 @@ class MainViewController: UIViewController {
     private lazy var statisticButton: UIButton = {
         let button = UIButton(type: .system)
         button.setBackgroundImage(UIImage(named: "Rectangle blue"), for: .normal)
-        button.setTitle("Statistic", for: .normal)
+        button.setTitle("Статистика", for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 25)
         button.tintColor = .white
         button.layer.cornerRadius = 15
@@ -129,7 +129,8 @@ class MainViewController: UIViewController {
     }
     
     @objc private func statisticButtonTapped() {
-        print("statistic")
+        let hiScoreViewController = HiScoreViewController()
+        navigationController?.pushViewController(hiScoreViewController, animated: true)
     }
 }
 
