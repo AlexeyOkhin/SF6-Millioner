@@ -23,11 +23,12 @@ class RegisterViewController: UIViewController {
         return imageView
     }()
     
-    private var nicknameLabel: UILabel = {
+    private var usernameLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.white
         label.font = UIFont.systemFont(ofSize: 28, weight: .bold)
-        label.text = "Enter your nickname"
+        label.text = "Enter your username"
+        label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
@@ -40,15 +41,13 @@ class RegisterViewController: UIViewController {
         return imageView
     }()
     
-    private var nicknameTextView: UITextField = {
+    private var usernameTextField: UITextField = {
         let textField = UITextField()
         textField.backgroundColor = UIColor.clear
         textField.layer.borderWidth = 1.0
         textField.layer.borderColor = UIColor.white.cgColor
         textField.layer.cornerRadius = 10
         textField.placeholder = "Djinsolobzik"
-        //textField.becomeFirstResponder()
-
         textField.textColor = UIColor.white
         textField.font = UIFont.systemFont(ofSize: 24)
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -65,18 +64,16 @@ class RegisterViewController: UIViewController {
         button.layer.cornerRadius = CGFloat(20)
         button.translatesAutoresizingMaskIntoConstraints = false
         
+        button.addTarget(self, action: #selector(registerButtonPressed), for: .touchUpInside)
+        
         return button
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(background)
-        //view.insertSubview(background, at: 0)
         view.addSubview(goldImageView)
         view.addSubview(logoImageView)
-//        view.addSubview(nicknameLabel)
-//        view.addSubview(nicknameTextView)
-//        view.addSubview(registerButton)
 
         NSLayoutConstraint.activate([
             background.topAnchor.constraint(equalTo: view.topAnchor),
@@ -99,7 +96,7 @@ class RegisterViewController: UIViewController {
             logoImageView.widthAnchor.constraint(equalToConstant: 170)
         ])
 
-        let stackView = UIStackView(arrangedSubviews: [nicknameLabel, nicknameTextView, registerButton])
+        let stackView = UIStackView(arrangedSubviews: [usernameLabel, usernameTextField, registerButton])
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
         stackView.spacing = 20
@@ -113,31 +110,13 @@ class RegisterViewController: UIViewController {
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
-
+    }
+    
+    @objc private func registerButtonPressed() {
+        let mainVC = MainViewController()
+        mainVC.modalPresentationStyle = .fullScreen
+        mainVC.username = usernameTextField.text!.count > 0 ? usernameTextField.text : "User"
         
-//        NSLayoutConstraint.activate([
-//            nicknameLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-//            nicknameLabel.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 20)
-//        ])
-//
-//        NSLayoutConstraint.activate([
-//            nicknameTextView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-//            nicknameTextView.topAnchor.constraint(equalTo: nicknameLabel.bottomAnchor, constant: 30),
-//            nicknameTextView.heightAnchor.constraint(equalToConstant: 47),
-//            nicknameTextView.widthAnchor.constraint(equalToConstant: 261)
-//        ])
-//
-//        NSLayoutConstraint.activate([
-//            registerButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//            registerButton.topAnchor.constraint(equalTo: nicknameTextView.bottomAnchor, constant: 30),
-//            registerButton.heightAnchor.constraint(equalToConstant: 47),
-//            registerButton.widthAnchor.constraint(equalToConstant: 267),
-//        ])
-
-//        NSLayoutConstraint.activate([
-//            goldImageView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-//            goldImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-//            goldImageView.heightAnchor.constraint(equalToConstant: 100)
-//        ])
+        self.navigationController?.pushViewController(mainVC, animated: true)
     }
 }
