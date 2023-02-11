@@ -93,9 +93,19 @@ final class FinishViewController: UIViewController {
         if isWin! {
             failAttemptLabel.text = "Ты выиграл \(money!) RUB"
         } else {
+            var used = "Использовано"
+            var attemptWord = "попыток"
+            
+            if failAttempt == 1 {
+                used = "Использована"
+                attemptWord = "попытка"
+            } else if failAttempt == 2 || failAttempt == 3 || failAttempt == 4 {
+                attemptWord = "попытки"
+            }
+            
             failAttemptLabel.text = """
             Ты проиграл!
-            Использовано \(failAttempt!) попыток.
+            \(used) \(failAttempt!) \(attemptWord).
             Ты выиграл \(money!) RUB
             """
         }
