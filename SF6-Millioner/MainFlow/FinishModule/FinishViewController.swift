@@ -36,6 +36,8 @@ final class FinishViewController: UIViewController {
         let label = UILabel()
         label.textColor = UIColor.white
         label.font = UIFont.systemFont(ofSize: 24)
+        label.numberOfLines = 0
+        label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
@@ -90,7 +92,10 @@ final class FinishViewController: UIViewController {
         if isWin! {
             failAttemptLabel.text = "You won \(money!) RUB"
         } else {
-            failAttemptLabel.text = "You losed on \(failAttempt!) attempt"
+            failAttemptLabel.text = """
+            You losed on \(failAttempt!) attempt
+            You won \(money!) RUB
+            """
         }
     }
     
@@ -115,28 +120,28 @@ final class FinishViewController: UIViewController {
         NSLayoutConstraint.activate([
             failAttemptLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             failAttemptLabel.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 5),
-            failAttemptLabel.heightAnchor.constraint(equalToConstant: 42),
+            failAttemptLabel.heightAnchor.constraint(equalToConstant: 84),
         ])
-
+        
         NSLayoutConstraint.activate([
             resultLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             resultLabel.topAnchor.constraint(equalTo: failAttemptLabel.bottomAnchor),
             resultLabel.heightAnchor.constraint(equalToConstant: 87),
         ])
-
+        
         NSLayoutConstraint.activate([
             playAgainButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             playAgainButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -84),
             playAgainButton.widthAnchor.constraint(equalToConstant: 300),
             playAgainButton.heightAnchor.constraint(equalToConstant: 100)
         ])
-
+        
         NSLayoutConstraint.activate([
             background.topAnchor.constraint(equalTo: view.topAnchor),
             background.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             background.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             background.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-
+            
         ])
     }
     

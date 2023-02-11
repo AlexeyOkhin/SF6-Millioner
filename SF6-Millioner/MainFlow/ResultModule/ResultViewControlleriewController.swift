@@ -17,6 +17,7 @@ final class ResultViewController: UIViewController {
     private let rangeForRow = 0 ... 14
     private var currentLevel = Int()
     private var amountOfMoney = [String]()
+    private var answer = Bool()
     
     private var background: UIImageView = {
         let imageView = UIImageView(frame: .zero)
@@ -33,9 +34,10 @@ final class ResultViewController: UIViewController {
         return imageView
     }()
     
-    init(level: Int, costQuestion: [String]) {
+    init(level: Int, costQuestion: [String], answer: Bool) {
         self.currentLevel = level
         self.amountOfMoney = costQuestion
+        self.answer = answer
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -45,8 +47,21 @@ final class ResultViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        view.addGestureRecognizer(tap)
         applyStyle()
         applyLayout()
+        checkAnswer(answer)
+    }
+    
+    @objc func handleTap() {
+        if answer {
+            navigationController?.popViewController(animated: true)
+            dismiss(animated: true, completion: nil)
+        } else {
+            let finishVC = FinishViewController(failAttempt: 0, isWin: answer, money: Int(amountOfMoney[currentLevel - 1]) ?? 0)
+            navigationController?.pushViewController(finishVC, animated: true)
+        }
     }
 }
 
@@ -63,9 +78,9 @@ private extension ResultViewController {
             
             let rectangleImage: UIImageView = {
                 let imageView = UIImageView()
-                if i == 0 || i == 4 || i == 9 {
+                if i == 5 || i == 10 {
                     imageView.image = UIImage(named: "Rectangle blue")
-                } else if i == 14 {
+                } else if i == 0 {
                     imageView.image = UIImage(named: "Rectangle yellow")
                 } else {
                     imageView.image = UIImage(named: "Rectangle violet")
@@ -102,9 +117,6 @@ private extension ResultViewController {
             moneyLabels[i] = moneyLabel
             moneyLabels[14].text = "1 Миллион"
         }
-        rectangleImages[currentLevel - 1].image = UIImage(named: "Rectangle green")
-        
-        rectangleImages.reverse()
         questionLabels.reverse()
         moneyLabels.reverse()
     }
@@ -135,18 +147,18 @@ private extension ResultViewController {
             )
             
             NSLayoutConstraint.activate([
-            rectangleImages[i].topAnchor.constraint(equalTo: paddingView[i].topAnchor),
-            rectangleImages[i].bottomAnchor.constraint(equalTo: paddingView[i].bottomAnchor),
-            rectangleImages[i].leadingAnchor.constraint(equalTo: paddingView[i].leadingAnchor),
-            rectangleImages[i].trailingAnchor.constraint(equalTo: paddingView[i].trailingAnchor),
-
-            stackViewForCell[i].trailingAnchor.constraint(equalTo: paddingView[i].trailingAnchor, constant: -20),
-            stackViewForCell[i].leadingAnchor.constraint(equalTo: paddingView[i].leadingAnchor, constant: 20),
-            stackViewForCell[i].topAnchor.constraint(equalTo: paddingView[i].topAnchor),
-            stackViewForCell[i].bottomAnchor.constraint(equalTo: paddingView[i].bottomAnchor)
+                rectangleImages[i].topAnchor.constraint(equalTo: paddingView[i].topAnchor),
+                rectangleImages[i].bottomAnchor.constraint(equalTo: paddingView[i].bottomAnchor),
+                rectangleImages[i].leadingAnchor.constraint(equalTo: paddingView[i].leadingAnchor),
+                rectangleImages[i].trailingAnchor.constraint(equalTo: paddingView[i].trailingAnchor),
+                
+                stackViewForCell[i].trailingAnchor.constraint(equalTo: paddingView[i].trailingAnchor, constant: -20),
+                stackViewForCell[i].leadingAnchor.constraint(equalTo: paddingView[i].leadingAnchor, constant: 20),
+                stackViewForCell[i].topAnchor.constraint(equalTo: paddingView[i].topAnchor),
+                stackViewForCell[i].bottomAnchor.constraint(equalTo: paddingView[i].bottomAnchor)
             ])
         }
-
+        
         NSLayoutConstraint.activate([
             background.topAnchor.constraint(equalTo: view.topAnchor),
             background.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -182,6 +194,21 @@ private extension ResultViewController {
         subviews.forEach { item in
             item.translatesAutoresizingMaskIntoConstraints = false
             stackView.addArrangedSubview(item)
+        }
+    }
+    
+    func checkAnswer(_ answer: Bool) {
+        if answer {
+            rectangleImages.reverse()
+            rectangleImages[currentLevel - 1].image = UIImage(named: "Rectangle green")
+        } else {
+            if currentLevel > 5 && currentLevel < 11 {
+                rectangleImages[10].image = UIImage(named: "Rectangle green")
+            } else if currentLevel > 10 && currentLevel < 15 {
+                rectangleImages[5].image = UIImage(named: "Rectangle green")
+            } else if currentLevel == 15 {
+                rectangleImages[0].image = UIImage(named: "Rectangle green")
+            }
         }
     }
 }
