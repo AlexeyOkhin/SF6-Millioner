@@ -55,6 +55,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                                                   width: 10,
                                                   height: textField.frame.height))
         textField.leftViewMode = .always
+        textField.tintColor = .white
         textField.clearButtonMode = .always
         textField.returnKeyType = .done
         textField.translatesAutoresizingMaskIntoConstraints = false
