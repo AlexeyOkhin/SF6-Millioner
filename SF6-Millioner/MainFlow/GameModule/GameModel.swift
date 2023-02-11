@@ -38,8 +38,10 @@ struct Game {
     }
 
     mutating func nextLevel() {
-        level += 1
-    }
+            if level > 0 && level < 15 {
+                level += 1
+            }
+        }
 
     func checkAnswer(answer: String) -> Bool {
         return answer == currentQuestion.correctAnswer

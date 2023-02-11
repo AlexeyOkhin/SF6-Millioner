@@ -41,7 +41,7 @@ class GameViewController: UIViewController {
 
     private var questionNumberLabel: UILabel = {
         let labelView = UILabel()
-        labelView.text = "Question 5"
+        labelView.text = "Вопрос 5"
         labelView.font = .systemFont(ofSize: 24)
         labelView.textColor = .white
         labelView.numberOfLines = 1
@@ -145,11 +145,12 @@ class GameViewController: UIViewController {
         return button
     }()
     
-    private var takeCash: UIButton = {
+    lazy private var takeCash: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = CGFloat(20)
         button.setBackgroundImage(UIImage(named: "takeCash"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(goFinish), for: .touchUpInside)
 
         return button
     }()
@@ -164,16 +165,18 @@ class GameViewController: UIViewController {
         startGame()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        if game.level > 0 {
-            game.nextLevel()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if game.level > 1 {
+            startGame()
+            print(game.currentQuestion.correctAnswer)
         }
     }
-    
+  
     func startGame() {
         questionLabel.text = game.currentQuestion.ask
-        questionNumberLabel.text = "Question \(game.level)"
-        scoreLabel.text = "\(game.currentQuestion.cost ?? "0") RUB"
+        questionNumberLabel.text = "Вопрос \(game.level)"
+        scoreLabel.text = "\(game.currentQuestion.cost ?? "0")"
         setTitleAnswer()
     }
 
@@ -200,12 +203,14 @@ class GameViewController: UIViewController {
     func playSound() {
         let url = Bundle.main.url(forResource: "timerSound", withExtension: "mp3")
         timerSound = try! AVAudioPlayer(contentsOf: url!)
+        timerSound.volume = 0.1
         timerSound.play()
     }
     
     func playCheckSound() {
         let check = Bundle.main.url(forResource: "checkAnswer", withExtension: "mp3")
         audioCheckAnswer = try! AVAudioPlayer(contentsOf: check!)
+        audioCheckAnswer.volume = 0.1
         audioCheckAnswer.play()
     }
     
@@ -225,9 +230,27 @@ class GameViewController: UIViewController {
     }
 
 
-    @objc private func showResult(_ sender: UIButton) {
-        let resultVC = ResultViewController(level: game.level, costQuestion: game.costQuestion, isTrueAnswer: false)
+    private func checkLevel(_ gameCheckAnswer: Bool) {
+        let resultVC = ResultViewController(level: game.level, costQuestion: game.costQuestion, isTrueAnswer: gameCheckAnswer)
         
+        if game.level > 14 && gameCheckAnswer {
+            let finishVC = FinishViewController(failAttempt: game.level, isWin: game.isWin, money: game.currentSum)
+            
+            progressBar.progress = 0.0
+            timer.invalidate()
+            timerSound.stop()
+            secondsPassed = 0
+            
+            self.navigationController?.pushViewController(finishVC, animated: true)
+        } else {
+            game.nextLevel()
+            self.navigationController?.pushViewController(resultVC, animated: true)
+        }
+    }
+    
+    @objc private func showResult(_ sender: UIButton) {
+        let gameCheckAnswer = game.checkAnswer(answer: sender.currentTitle ?? "")
+
         progressBar.progress = 0.0
         timer.invalidate()
         timerSound.stop()
@@ -239,12 +262,23 @@ class GameViewController: UIViewController {
         playCheckSound()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 5) { [weak self] in
-            self?.animateButton(sender, playing: false)
-    
-            self?.audioCheckAnswer.stop()
-            self?.navigationController?.pushViewController(resultVC, animated: true)
+            guard let self else { return }
+            self.animateButton(sender, playing: false)
+            self.audioCheckAnswer.stop()
+            
+            self.checkLevel(gameCheckAnswer)
         }
-
+    }
+  
+    @objc private func goFinish(_ sender: UIButton) {
+        let finishVC = FinishViewController(failAttempt: game.level, isWin: game.isWin, money: game.currentSum)
+        
+        progressBar.progress = 0.0
+        timer.invalidate()
+        timerSound.stop()
+        secondsPassed = 0
+        
+        self.navigationController?.pushViewController(finishVC, animated: true)
     }
 
     @objc private func fiftyFiftyPressed() {
@@ -323,7 +357,7 @@ class GameViewController: UIViewController {
         let labelStackView = UIStackView(arrangedSubviews: [questionNumberLabel, scoreLabel])
         labelStackView.axis = .horizontal
         labelStackView.distribution = .fillEqually
-        labelStackView.spacing = 100
+        labelStackView.spacing = 40
         labelStackView.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(labelStackView)
