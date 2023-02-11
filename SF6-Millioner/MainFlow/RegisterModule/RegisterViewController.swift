@@ -127,6 +127,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
 //        mainVC.username = usernameTextField.text!.count > 0 ? usernameTextField.text : "User"
         mainVC.welcomeLabel.text = "Добро пожаловать \(usernameTextField.text!)!"
         self.navigationController?.pushViewController(mainVC, animated: true)
+        navigationItem.backButtonTitle = "Назад"
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
