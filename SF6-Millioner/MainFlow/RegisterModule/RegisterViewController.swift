@@ -82,6 +82,8 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         view.addSubview(goldImageView)
         view.addSubview(logoImageView)
         
+        addTaps()
+        
         NSLayoutConstraint.activate([
             background.topAnchor.constraint(equalTo: view.topAnchor),
             background.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -121,6 +123,12 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         ])
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        usernameTextField.text = ""
+    }
+    
     @objc private func registerButtonPressed() {
         let mainVC = MainViewController()
         mainVC.modalPresentationStyle = .fullScreen
@@ -130,8 +138,17 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         navigationItem.backButtonTitle = "Назад"
     }
     
+    private func addTaps() {
+        let tapScreen = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        view.addGestureRecognizer(tapScreen)
+    }
+    
+    @objc private func hideKeyboard() {
+        view.endEditing(true)
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        registerButtonPressed()
+        usernameTextField.resignFirstResponder()
         
         return true
     }
