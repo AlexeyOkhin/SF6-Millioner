@@ -102,7 +102,8 @@ class MainViewController: UIViewController {
 //        print("Start")
         
         let registerVC = RegisterViewController()
-        navigationController?.pushViewController(registerVC, animated: true)
+        //navigationController?.pushViewController(registerVC, animated: false)
+        navigationController?.showDetailViewController(registerVC, sender: self)
     }
 
 }

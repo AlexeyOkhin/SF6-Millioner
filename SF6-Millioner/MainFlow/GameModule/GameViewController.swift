@@ -9,6 +9,9 @@ import UIKit
 
 class GameViewController: UIViewController {
 
+    //MARK: - Properties
+    var namePlayer: String?
+
     //MARK: - Private Properties
     private var logoImageView: UIImageView = {
         let imageView = UIImageView()
@@ -138,6 +141,7 @@ class GameViewController: UIViewController {
     @objc private func showResult() {
         let resultVC = FinishViewController(failAttempt: 10, isWin: true, money: 1000)
         navigationController?.pushViewController(resultVC, animated: true)
+
     }
 
     private func settingNavigationBar() {
