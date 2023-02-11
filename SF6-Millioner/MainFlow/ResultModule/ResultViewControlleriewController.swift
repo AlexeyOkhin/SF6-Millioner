@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AVFAudio
 
 final class ResultViewController: UIViewController {
     private let mainStackView = UIStackView()
@@ -19,6 +20,8 @@ final class ResultViewController: UIViewController {
     private var amountOfMoney = [String]()
     private var isTrueAnswer = Bool()
     private var fireproofAmount = ""
+    private var timer = Timer()
+    private var timerSound: AVAudioPlayer!
     
     private var background: UIImageView = {
         let imageView = UIImageView(frame: .zero)
@@ -35,10 +38,10 @@ final class ResultViewController: UIViewController {
         return imageView
     }()
     
-    init(level: Int, costQuestion: [String], answer: Bool) {
+    init(level: Int, costQuestion: [String], isTrueAnswer: Bool) {
         self.currentLevel = level
         self.amountOfMoney = costQuestion
-        self.isTrueAnswer = answer
+        self.isTrueAnswer = isTrueAnswer
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -197,6 +200,7 @@ private extension ResultViewController {
     }
     
     func checkAnswer(_ answer: Bool) {
+        playSound(answer)
         if answer {
             rectangleImages.reverse()
             animateForWin()
@@ -211,6 +215,9 @@ private extension ResultViewController {
                 fireproofAmount = amountOfMoney[9]
             } else if currentLevel == 15 {
                 rectangleImages[0].image = UIImage(named: "Rectangle green")
+            } else if currentLevel < 5 {
+                fireproofAmount = "0 RUB"
+                showAlert()
             }
         }
     }
@@ -219,23 +226,26 @@ private extension ResultViewController {
         if currentLevel == 1 {
             rectangleImages[currentLevel - 1].image = UIImage(named: "Rectangle green")
             UIView.animate(
-                withDuration: 0.5,
+                withDuration: 0.3,
                 delay: 0.0,
                 options: .curveLinear,
                 animations: { [self] in
+
                     UIView.modifyAnimations(withRepeatCount: 3, autoreverses: true) {
                         rectangleImages[currentLevel - 1].alpha = 0.0
                     }
                 }){ [self]_ in
                     rectangleImages[currentLevel - 1].alpha = 1.0
+
                 }
         } else {
             rectangleImages[currentLevel - 2].image = UIImage(named: "Rectangle green")
             UIView.animate(
-                withDuration: 0.5,
+                withDuration: 0.3,
                 delay: 0.0,
                 options: .curveLinear,
                 animations: { [self] in
+
                     UIView.modifyAnimations(withRepeatCount: 3, autoreverses: true) {
                         rectangleImages[currentLevel - 2].alpha = 0.0
                     }
@@ -243,13 +253,14 @@ private extension ResultViewController {
                     rectangleImages[currentLevel - 2].alpha = 1.0
                     rectangleImages[currentLevel - 2].image = UIImage(named: "Rectangle violet")
                     rectangleImages[currentLevel - 1].image = UIImage(named: "Rectangle green")
+
                 }
         }
     }
     
     func animateForLose(_ rectangleImages: UIImageView) {
         UIView.animate(
-            withDuration: 0.5,
+            withDuration: 0.3,
             delay: 0.0,
             options: .curveLinear,
             animations: {
@@ -261,12 +272,28 @@ private extension ResultViewController {
             }
         }) { [self] _ in
             rectangleImages.alpha = 1.0
-            self.showAlert(
-                title: "You Loser",
-                message: "(You won \(fireproofAmount) RUB)"
-            ){ [self] _ in
-                navigationController?.popToRootViewController(animated: true)
-            }
+            showAlert()
+        }
+    }
+    
+    func showAlert() {
+        showAlert(
+            title: "You Loser",
+            message: "(You won \(fireproofAmount) RUB)"
+        ){ [self] _ in
+            navigationController?.popToRootViewController(animated: true)
+        }
+    }
+    
+    func playSound(_ isTrueAnswer: Bool) {
+        if isTrueAnswer {
+            let url = Bundle.main.url(forResource: "answerTrue", withExtension: "mp3")
+            timerSound = try! AVAudioPlayer(contentsOf: url!)
+            timerSound.play()
+        } else {
+            let url = Bundle.main.url(forResource: "answerFalse", withExtension: "mp3")
+            timerSound = try! AVAudioPlayer(contentsOf: url!)
+            timerSound.play()
         }
     }
 }
