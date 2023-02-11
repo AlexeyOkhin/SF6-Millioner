@@ -9,6 +9,8 @@ import UIKit
 
 class MainViewController: UIViewController {
 
+    var namePlayer: String?
+    
     //MARK: - Private Properties
     private let backgroundImageView: UIImageView = {
         let imageView = UIImageView()
@@ -48,7 +50,7 @@ class MainViewController: UIViewController {
     private lazy var rulesButton: UIButton = {
         let button = UIButton(type: .system)
         button.setBackgroundImage(UIImage(named: "Rectangle blue"), for: .normal)
-        button.setTitle("Rules of the game", for: .normal)
+        button.setTitle("Rules", for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 25)
         button.tintColor = .white
         button.layer.cornerRadius = 15
@@ -60,11 +62,23 @@ class MainViewController: UIViewController {
     private lazy var startButton: UIButton = {
         let button = UIButton(type: .system)
         button.setBackgroundImage(UIImage(named: "Rectangle blue"), for: .normal)
-        button.setTitle("Start the game", for: .normal)
+        button.setTitle("Start", for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 25)
         button.tintColor = .white
         button.layer.cornerRadius = 15
         button.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    private lazy var statisticButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setBackgroundImage(UIImage(named: "Rectangle blue"), for: .normal)
+        button.setTitle("Statistic", for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 25)
+        button.tintColor = .white
+        button.layer.cornerRadius = 15
+        button.addTarget(self, action: #selector(statisticButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -85,6 +99,7 @@ class MainViewController: UIViewController {
         view.addSubview(mainLabel)
         view.addSubview(rulesButton)
         view.addSubview(startButton)
+        view.addSubview(statisticButton)
     }
     
     @objc private func rulesButtonTapped() {
@@ -94,7 +109,10 @@ class MainViewController: UIViewController {
     @objc private func startButtonTapped() {
         print("Start")
     }
-
+    
+    @objc private func statisticButtonTapped() {
+        print("statistic")
+    }
 }
 
 //MARK: - Constraints
@@ -120,7 +138,7 @@ extension MainViewController {
             mainLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -60),
             mainLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
-            rulesButton.topAnchor.constraint(equalTo: mainLabel.bottomAnchor, constant: 100),
+            rulesButton.topAnchor.constraint(equalTo: mainLabel.bottomAnchor, constant: 70),
             rulesButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             rulesButton.heightAnchor.constraint(equalToConstant: 50),
             rulesButton.widthAnchor.constraint(equalToConstant: 250),
@@ -129,7 +147,12 @@ extension MainViewController {
             startButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             startButton.heightAnchor.constraint(equalToConstant: 50),
             startButton.widthAnchor.constraint(equalToConstant: 250),
-            startButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
+            
+            statisticButton.topAnchor.constraint(equalTo: startButton.bottomAnchor, constant: 20),
+            statisticButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            statisticButton.heightAnchor.constraint(equalToConstant: 50),
+            statisticButton.widthAnchor.constraint(equalToConstant: 250),
+            statisticButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
         ])
     }
 }
