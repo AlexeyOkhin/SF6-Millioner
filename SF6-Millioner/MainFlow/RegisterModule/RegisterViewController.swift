@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RegisterViewController: UIViewController {
+class RegisterViewController: UIViewController, UITextFieldDelegate {
     private var logoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "Logo")
@@ -74,7 +74,7 @@ class RegisterViewController: UIViewController {
         view.addSubview(background)
         view.addSubview(goldImageView)
         view.addSubview(logoImageView)
-
+        
         NSLayoutConstraint.activate([
             background.topAnchor.constraint(equalTo: view.topAnchor),
             background.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -95,6 +95,8 @@ class RegisterViewController: UIViewController {
             logoImageView.heightAnchor.constraint(equalToConstant: 170),
             logoImageView.widthAnchor.constraint(equalToConstant: 170)
         ])
+        
+        usernameTextField.delegate = self
 
         let stackView = UIStackView(arrangedSubviews: [usernameLabel, usernameTextField, registerButton])
         stackView.axis = .vertical
@@ -118,5 +120,11 @@ class RegisterViewController: UIViewController {
         mainVC.username = usernameTextField.text!.count > 0 ? usernameTextField.text : "User"
         
         self.navigationController?.pushViewController(mainVC, animated: true)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        registerButtonPressed()
+        
+        return true
     }
 }
