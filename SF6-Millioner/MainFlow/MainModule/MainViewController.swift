@@ -37,7 +37,7 @@ class MainViewController: UIViewController {
     
     private let mainLabel: UILabel = {
         let label = UILabel()
-        label.text = "Кто хочет стать миллионером?"
+        label.text = "Хочешь стать миллионером?"
         label.font = .systemFont(ofSize: 34)
         label.numberOfLines = 2
         label.adjustsFontSizeToFitWidth = true
@@ -96,6 +96,7 @@ class MainViewController: UIViewController {
     private func settingNavigationBar() {
         navigationItem.backButtonTitle = "Назад"
         navigationController?.navigationBar.tintColor = .white
+        
     }
 
     private func setupView() {
