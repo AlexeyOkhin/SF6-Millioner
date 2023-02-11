@@ -15,7 +15,8 @@ final class ResultViewController: UIViewController {
     private var moneyLabels = Array(repeating: UILabel(), count: 15)
     private var stackViewForCell = [UIStackView]()
     private let rangeForRow = 0 ... 14
-    private let amountOfMoney = [0: 100, 1: 200, 2: 300, 3: 500, 4: 1_000, 5: 2_000, 6: 4_000, 7: 8_000, 8: 16_000, 9: 32_000, 10: 64_000, 11: 125_000, 12: 250_000, 13: 500_000, 14: 1_000_000]
+    private var currentLevel = Int()
+    private var amountOfMoney = [String]()
     
     private var background: UIImageView = {
         let imageView = UIImageView(frame: .zero)
@@ -31,6 +32,16 @@ final class ResultViewController: UIViewController {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
+    
+    init(level: Int, costQuestion: [String]) {
+        self.currentLevel = level
+        self.amountOfMoney = costQuestion
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,9 +63,9 @@ private extension ResultViewController {
             
             let rectangleImage: UIImageView = {
                 let imageView = UIImageView()
-                if i == 5 || i == 10 || i == 14 {
+                if i == 0 || i == 4 || i == 9 {
                     imageView.image = UIImage(named: "Rectangle blue")
-                } else if i == 0 {
+                } else if i == 14 {
                     imageView.image = UIImage(named: "Rectangle yellow")
                 } else {
                     imageView.image = UIImage(named: "Rectangle violet")
@@ -80,7 +91,7 @@ private extension ResultViewController {
             
             let moneyLabel: UILabel = {
                 let label = UILabel()
-                label.text = "\(amountOfMoney[i] ?? 0) RUB"
+                label.text = "\(amountOfMoney[i]) RUB"
                 label.textColor = .white
                 label.font = .systemFont(ofSize: 20)
                 label.textAlignment = .right
@@ -91,6 +102,9 @@ private extension ResultViewController {
             moneyLabels[i] = moneyLabel
             moneyLabels[14].text = "1 Миллион"
         }
+        rectangleImages[currentLevel - 1].image = UIImage(named: "Rectangle green")
+        
+        rectangleImages.reverse()
         questionLabels.reverse()
         moneyLabels.reverse()
     }
