@@ -27,7 +27,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         let label = UILabel()
         label.textColor = UIColor.white
         label.font = UIFont.systemFont(ofSize: 28, weight: .bold)
-        label.text = "Enter your username"
+        label.text = "Введите свое имя"
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         
@@ -47,9 +47,16 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         textField.layer.borderWidth = 1.0
         textField.layer.borderColor = UIColor.white.cgColor
         textField.layer.cornerRadius = 10
-        textField.placeholder = "Djinsolobzik"
+        textField.placeholder = "Например: Читер"
         textField.textColor = UIColor.white
         textField.font = UIFont.systemFont(ofSize: 24)
+        textField.leftView = UIView(frame: CGRect(x: 0,
+                                                  y: 0,
+                                                  width: 10,
+                                                  height: textField.frame.height))
+        textField.leftViewMode = .always
+        textField.clearButtonMode = .always
+        textField.returnKeyType = .done
         textField.translatesAutoresizingMaskIntoConstraints = false
         
         return textField
@@ -59,9 +66,9 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         let button = UIButton(type: .system)
         button.setBackgroundImage(UIImage(named: "Rectangle blue"), for: .normal)
         button.tintColor = .white
-        button.setTitle("Register and start", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 28, weight: .bold)
-        button.layer.cornerRadius = CGFloat(20)
+        button.setTitle("Зарегистрироваться", for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 25, weight: .bold)
+        button.layer.cornerRadius = CGFloat(15)
         button.translatesAutoresizingMaskIntoConstraints = false
         
         button.addTarget(self, action: #selector(registerButtonPressed), for: .touchUpInside)
@@ -117,8 +124,8 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     @objc private func registerButtonPressed() {
         let mainVC = MainViewController()
         mainVC.modalPresentationStyle = .fullScreen
-        mainVC.username = usernameTextField.text!.count > 0 ? usernameTextField.text : "User"
-        
+//        mainVC.username = usernameTextField.text!.count > 0 ? usernameTextField.text : "User"
+        mainVC.welcomeLabel.text = "Добро пожаловать \(usernameTextField.text!)!"
         self.navigationController?.pushViewController(mainVC, animated: true)
     }
     

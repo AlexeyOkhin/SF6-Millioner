@@ -8,11 +8,8 @@
 import UIKit
 
 class MainViewController: UIViewController {
-
-    var namePlayer: String?
     
     //MARK: - Private Properties
-    var username: Optional<String>?
     
     private let backgroundImageView: UIImageView = {
         let imageView = UIImageView()
@@ -28,10 +25,11 @@ class MainViewController: UIViewController {
         return imageView
     }()
     
-    private let welcomeLabel: UILabel = {
+    var welcomeLabel: UILabel = {
         let label = UILabel()
-        label.text = "Добро пожаловать!"
         label.textColor = .white
+        label.numberOfLines = 2
+        label.textAlignment = .center
         label.font = .systemFont(ofSize: 24)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -88,7 +86,6 @@ class MainViewController: UIViewController {
     //MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(username)
         settingNavigationBar()
         setupView()
         setConstraints()
@@ -151,6 +148,8 @@ extension MainViewController {
             
             welcomeLabel.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 20),
             welcomeLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            welcomeLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 60),
+            welcomeLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -60),
             
             mainLabel.topAnchor.constraint(equalTo: welcomeLabel.bottomAnchor, constant: 20),
             mainLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 60),
