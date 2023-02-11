@@ -231,7 +231,7 @@ class GameViewController: UIViewController {
 
 
     private func checkLevel(_ gameCheckAnswer: Bool) {
-        let resultVC = ResultViewController(level: game.level, costQuestion: game.costQuestion, isTrueAnswer: gameCheckAnswer)
+        let resultVC = ResultViewController(level: game.level, costQuestion: game.costQuestion, answer: gameCheckAnswer)
         
         if game.level > 14 && gameCheckAnswer {
             let finishVC = FinishViewController(failAttempt: game.level, isWin: game.isWin, money: game.currentSum)
