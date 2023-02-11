@@ -90,18 +90,22 @@ final class FinishViewController: UIViewController {
     
     private func setupFailAttemptLabel() {
         if isWin! {
-            failAttemptLabel.text = "You won \(money!) RUB"
+            failAttemptLabel.text = "Ты выиграл \(money!) RUB"
         } else {
-            failAttemptLabel.text = "You losed on \(failAttempt!) attempt"
+            failAttemptLabel.text = """
+            Ты проиграл!
+            Использовано \(failAttempt!) попыток.
+            Ты выиграл \(money!) RUB
+            """
         }
     }
     
     private func setupResultLabel() {
         if isWin! {
-            resultLabel.text = "WIN"
+            resultLabel.text = "ПОБЕДА"
             resultLabel.textColor = UIColor.green
         } else {
-            resultLabel.text = "LOSE"
+            resultLabel.text = "ПРОИГРЫШ"
             resultLabel.textColor = UIColor(hexString: "#F66324")
         }
     }
