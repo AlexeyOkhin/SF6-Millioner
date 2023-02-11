@@ -224,6 +224,7 @@ class GameViewController: UIViewController {
         }
     }
 
+
     @objc private func showResult(_ sender: UIButton) {
         let resultVC = ResultViewController(level: game.level, costQuestion: game.costQuestion)
         
@@ -243,6 +244,7 @@ class GameViewController: UIViewController {
             self?.audioCheckAnswer.stop()
             self?.navigationController?.pushViewController(resultVC, animated: true)
         }
+
     }
 
     @objc private func fiftyFiftyPressed() {
