@@ -55,7 +55,7 @@ final class FinishViewController: UIViewController {
     private var playAgainButton: UIButton = {
         let button = UIButton(frame: CGRect(x: 20, y: 500, width: 300, height: 100))
         button.backgroundColor = UIColor(hexString: "#34B83A")
-        button.setTitle("PLAY AGAIN", for: .normal)
+        button.setTitle("Играть еще раз", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 30, weight: .bold)
         button.layer.cornerRadius = CGFloat(20)
         button.translatesAutoresizingMaskIntoConstraints = false
