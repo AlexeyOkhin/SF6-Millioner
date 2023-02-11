@@ -118,9 +118,9 @@ class MainViewController: UIViewController {
     }
     
     @objc private func startButtonTapped() {
-//        let gameVC = GameViewController()
-//        navigationController?.pushViewController(gameVC, animated: true)
-//        print("Start")
+        let gameVC = GameViewController()
+        navigationController?.pushViewController(gameVC, animated: true)
+        print("Start")
         
 //        let registerVC = RegisterViewController()
 //        //navigationController?.pushViewController(registerVC, animated: false)

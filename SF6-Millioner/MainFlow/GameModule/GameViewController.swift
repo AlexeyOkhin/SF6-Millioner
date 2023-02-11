@@ -6,25 +6,18 @@
 //
 
 import UIKit
+import AVFoundation
 
 class GameViewController: UIViewController {
 
     //MARK: - Properties
-
     var game = Game(nameGamer: "Алексей", fireproofAmount: 0)
-
-    
-    var timer: Timer?
-
+    var audioCheckAnswer: AVAudioPlayer!
+    var timer = Timer()
+    var timerSound: AVAudioPlayer!
+    var secondsPassed = 0
 
     //MARK: - Private Properties
-    private var logoImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "Logo")
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-    
     private var background: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "background")
@@ -35,11 +28,14 @@ class GameViewController: UIViewController {
     private var questionLabel: UILabel = {
         let labelView = UILabel()
         labelView.text = "За сколько секунд атакующая баскетбольная команда должна перевести мяч со своей половины поля на половину противника?"
-        labelView.font = .systemFont(ofSize: 18)
+        //labelView.font = .systemFont(ofSize: 20)
         labelView.textColor = .white
         labelView.numberOfLines = 0
         labelView.textAlignment = .left
         labelView.translatesAutoresizingMaskIntoConstraints = false
+        labelView.font = UIFont.preferredFont(forTextStyle: .body)
+        labelView.adjustsFontForContentSizeCategory = true
+        
         return labelView
     }()
 
@@ -78,37 +74,40 @@ class GameViewController: UIViewController {
     }()
     
     //MARK: - Answer Button
-    private var answerAButton: UIButton = {
+    lazy private var answerAButton: UIButton = {
         let button = UIButton()
         button.setBackgroundImage(UIImage(named: "Rectangle blue"), for: .normal)
         button.setTitle("A", for: .normal)
         button.layer.cornerRadius = CGFloat(20)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(showResult), for: .touchUpInside)
         
         return button
     }()
     
-    private var answerBButton: UIButton = {
+    lazy private var answerBButton: UIButton = {
         let button = UIButton()
         button.setBackgroundImage(UIImage(named: "Rectangle blue"), for: .normal)
         button.setTitle("B", for: .normal)
         button.layer.cornerRadius = CGFloat(20)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(showResult), for: .touchUpInside)
         
         return button
     }()
     
-    private var answerCButton: UIButton = {
+    lazy private var answerCButton: UIButton = {
         let button = UIButton()
         button.setBackgroundImage(UIImage(named: "Rectangle blue"), for: .normal)
         button.setTitle("C", for: .normal)
         button.layer.cornerRadius = CGFloat(20)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(showResult), for: .touchUpInside)
         
         return button
     }()
 
-    private var answerDButton: UIButton = {
+    lazy private var answerDButton: UIButton = {
         let button = UIButton()
         button.setBackgroundImage(UIImage(named: "Rectangle blue"), for: .normal)
         button.setTitle("D", for: .normal)
@@ -119,7 +118,7 @@ class GameViewController: UIViewController {
     }()
     
     //MARK: - Help Button
-    private var fiftyFifty: UIButton = {
+    lazy private var fiftyFifty: UIButton = {
         let button = UIButton()
         button.setBackgroundImage(UIImage(named: "fiftyFifty"), for: .normal)
         button.layer.cornerRadius = CGFloat(20)
@@ -128,7 +127,7 @@ class GameViewController: UIViewController {
         return button
     }()
     
-    private var hallHelp: UIButton = {
+    lazy private var hallHelp: UIButton = {
         let button = UIButton()
         button.setBackgroundImage(UIImage(named: "hallHelp"), for: .normal)
         button.layer.cornerRadius = CGFloat(20)
@@ -137,7 +136,7 @@ class GameViewController: UIViewController {
         return button
     }()
     
-    private var rightToMistake: UIButton = {
+    lazy private var rightToMistake: UIButton = {
         let button = UIButton()
         button.setBackgroundImage(UIImage(named: "rightToMistake"), for: .normal)
         button.layer.cornerRadius = CGFloat(20)
@@ -155,6 +154,7 @@ class GameViewController: UIViewController {
         return button
     }()
     
+    //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -163,7 +163,13 @@ class GameViewController: UIViewController {
         setupConstraints()
         startGame()
     }
-
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        if game.level > 0 {
+            game.nextLevel()
+        }
+    }
+    
     func startGame() {
         questionLabel.text = game.currentQuestion.ask
         questionNumberLabel.text = "Question \(game.level)"
@@ -177,12 +183,67 @@ class GameViewController: UIViewController {
         for (num, button) in buttons.enumerated() {
             button.setTitle(answers[num], for: .normal)
         }
+        
+        setTimer()
+    }
+    
+    
+    //MARK: - Func for Music and Timer
+    func setTimer() {
+        timer.invalidate()
+        progressBar.progress = 0.0
+        playSound()
+        
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateCounter), userInfo: nil, repeats: true)
+    }
+    
+    func playSound() {
+        let url = Bundle.main.url(forResource: "timerSound", withExtension: "mp3")
+        timerSound = try! AVAudioPlayer(contentsOf: url!)
+        timerSound.play()
+    }
+    
+    func playCheckSound() {
+        let check = Bundle.main.url(forResource: "checkAnswer", withExtension: "mp3")
+        audioCheckAnswer = try! AVAudioPlayer(contentsOf: check!)
+        audioCheckAnswer.play()
+    }
+    
+    //Blink the button
+    func animateButton(_ sender: UIButton, playing: Bool) {
+        if playing {
+            UIView.animate(withDuration: 0.5,
+                           delay: 0,
+                           options: [.autoreverse, .repeat],
+                           animations: { sender.alpha = 0.5 },
+                           completion: nil)
+        } else {
+            UIView.animate(withDuration: 0.5,
+                           animations: { sender.alpha = 1 },
+                           completion: nil)
+        }
     }
 
-    @objc private func showResult() {
-        let gameAnswer: Bool = false
-        let resultVC = ResultViewController(level: 11, costQuestion: game.costQuestion, answer: gameAnswer)
-        navigationController?.pushViewController(resultVC, animated: true)
+
+    @objc private func showResult(_ sender: UIButton) {
+        let resultVC = ResultViewController(level: game.level, costQuestion: game.costQuestion)
+        
+        progressBar.progress = 0.0
+        timer.invalidate()
+        timerSound.stop()
+        secondsPassed = 0
+        
+        // Blink the button
+        animateButton(sender, playing: true)
+        // music
+        playCheckSound()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) { [weak self] in
+            self?.animateButton(sender, playing: false)
+    
+            self?.audioCheckAnswer.stop()
+            self?.navigationController?.pushViewController(resultVC, animated: true)
+        }
 
     }
 
@@ -213,7 +274,6 @@ class GameViewController: UIViewController {
     
     private func initSubviews() {
         self.view.insertSubview(background, at: 0)
-        self.view.addSubview(logoImageView)
         self.view.addSubview(questionLabel)
         
         self.view.addSubview(questionNumberLabel)
@@ -233,6 +293,16 @@ class GameViewController: UIViewController {
         self.view.addSubview(takeCash)
     }
     
+    @objc func updateCounter() {
+        if secondsPassed < game.timeLevel {
+            secondsPassed += 1
+            progressBar.progress = Float(secondsPassed) / Float(game.timeLevel)
+        } else {
+            timer.invalidate()
+        }
+    }
+    
+    
     //MARK: - Setup Constraints
     private func setupConstraints(){
         
@@ -242,18 +312,12 @@ class GameViewController: UIViewController {
             background.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             background.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
-        
-        NSLayoutConstraint.activate([
-            logoImageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 18),
-            logoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 19),
-            logoImageView.heightAnchor.constraint(equalToConstant: 87),
-            logoImageView.widthAnchor.constraint(equalToConstant: 87)
-        ])
 
         NSLayoutConstraint.activate([
             questionLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            questionLabel.leadingAnchor.constraint(equalTo: logoImageView.trailingAnchor, constant: 21),
-            questionLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -7)
+            questionLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -7),
+            questionLabel.heightAnchor.constraint(lessThanOrEqualToConstant: 200),
+            questionLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
         
         let labelStackView = UIStackView(arrangedSubviews: [questionNumberLabel, scoreLabel])
@@ -265,7 +329,7 @@ class GameViewController: UIViewController {
         view.addSubview(labelStackView)
         
         NSLayoutConstraint.activate([
-            labelStackView.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 14),
+            labelStackView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 14),
             labelStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             labelStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             labelStackView.heightAnchor.constraint(equalToConstant: 25)
@@ -325,7 +389,7 @@ class GameViewController: UIViewController {
         view.addSubview(mainStackView)
         
         NSLayoutConstraint.activate([
-            mainStackView.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 14),
+            mainStackView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 14),
             mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             mainStackView.bottomAnchor.constraint(equalTo: takeCash.topAnchor, constant: -10)
