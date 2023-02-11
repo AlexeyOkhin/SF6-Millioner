@@ -17,14 +17,6 @@ class HiScoreViewController: UIViewController {
         return imageView
     }()
     
-    private let headerLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Statistic"
-        label.font = .systemFont(ofSize: 30)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(HiScoreTableViewCell.self,
@@ -38,13 +30,18 @@ class HiScoreViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(backgroundImageView)
-        view.addSubview(headerLabel)
         view.addSubview(tableView)
         
         tableView.dataSource = self
         tableView.delegate = self
         
         setConstraints()
+        settingNavigationBar()
+    }
+    
+    private func settingNavigationBar() {
+        navigationItem.title = "Статистика"
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     override func viewDidLayoutSubviews() {
@@ -79,10 +76,7 @@ extension HiScoreViewController {
     
     private func setConstraints() {
         NSLayoutConstraint.activate([
-            headerLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
-            headerLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
-            tableView.topAnchor.constraint(equalTo: headerLabel.bottomAnchor, constant: 10),
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
