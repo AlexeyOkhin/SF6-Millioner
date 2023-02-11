@@ -182,6 +182,7 @@ class GameViewController: UIViewController {
     @objc private func showResult() {
         let resultVC = ResultViewController(level: game.level, costQuestion: game.costQuestion)
         navigationController?.pushViewController(resultVC, animated: true)
+
     }
 
     @objc private func fiftyFiftyPressed() {

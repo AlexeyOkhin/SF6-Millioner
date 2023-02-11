@@ -16,12 +16,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        let mainVC = MainViewController()
-        let navigationVC = UINavigationController(rootViewController: mainVC)
+        let registerVC = RegisterViewController()
+        let navigationVC = UINavigationController(rootViewController: registerVC)
         navigationVC.navigationBar.titleTextAttributes = [
             .foregroundColor: UIColor.white
         ]
-        navigationVC.navigationItem.backButtonTitle = "Contacts"
         window?.rootViewController = navigationVC
         window?.makeKeyAndVisible()
     }

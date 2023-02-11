@@ -10,6 +10,8 @@ import UIKit
 class MainViewController: UIViewController {
 
     //MARK: - Private Properties
+    var username: Optional<String>?
+    
     private let backgroundImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "background")
@@ -69,6 +71,7 @@ class MainViewController: UIViewController {
     //MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(username)
         settingNavigationBar()
         setupView()
         setConstraints()
@@ -97,9 +100,14 @@ class MainViewController: UIViewController {
     }
     
     @objc private func startButtonTapped() {
-        let gameVC = GameViewController()
-        navigationController?.pushViewController(gameVC, animated: true)
-        print("Start")
+//        let gameVC = GameViewController()
+//        navigationController?.pushViewController(gameVC, animated: true)
+//        print("Start")
+        
+//        let registerVC = RegisterViewController()
+//        //navigationController?.pushViewController(registerVC, animated: false)
+//        registerVC.modalPresentationStyle = .fullScreen
+//        navigationController?.showDetailViewController(registerVC, sender: self)
     }
 
 }
