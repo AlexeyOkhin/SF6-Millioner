@@ -277,14 +277,7 @@ class GameViewController: UIViewController {
     }
   
     @objc private func goFinish(_ sender: UIButton) {
-        let finishVC = FinishViewController(failAttempt: game.level, isWin: game.isWin, money: game.currentSum)
-        
-        progressBar.progress = 0.0
-        timer.invalidate()
-        timerSound.stop()
-        secondsPassed = 0
-        
-        self.navigationController?.pushViewController(finishVC, animated: true)
+        finishGame()
     }
 
     @objc private func fiftyFiftyPressed() {
@@ -340,15 +333,19 @@ class GameViewController: UIViewController {
         } else {
             timer.invalidate()
             
-            let finishVC = FinishViewController(failAttempt: game.level, isWin: game.isWin, money: game.currentSum)
-            
-            progressBar.progress = 0.0
-            timer.invalidate()
-            timerSound.stop()
-            secondsPassed = 0
-            
-            self.navigationController?.pushViewController(finishVC, animated: true)
+            finishGame()
         }
+    }
+    
+    func finishGame() {
+        let finishVC = FinishViewController(failAttempt: game.level, isWin: game.isWin, money: game.currentSum)
+        
+        progressBar.progress = 0.0
+        timer.invalidate()
+        timerSound.stop()
+        secondsPassed = 0
+        
+        self.navigationController?.pushViewController(finishVC, animated: true)
     }
     
     
