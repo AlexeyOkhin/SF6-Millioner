@@ -229,15 +229,25 @@ private extension ResultViewController {
     }
     
     func animateForLose(_ rectangleImages: UIImageView) {
-        UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveLinear, animations: {
-            UIView.modifyAnimations(withRepeatCount: 2, autoreverses: true) {
+        UIView.animate(
+            withDuration: 0.5,
+            delay: 0.0,
+            options: .curveLinear,
+            animations: {
+            UIView.modifyAnimations(
+                withRepeatCount: 2,
+                autoreverses: true
+            ){
                 rectangleImages.alpha = 0.0
             }
         }) { [self] _ in
             rectangleImages.alpha = 1.0
-            self.showAlert(title: "You Loser", message: "(You won \(fireproofAmount) RUB)") { [self] _ in
+            self.showAlert(
+                title: "You Loser",
+                message: "(You won \(fireproofAmount) RUB)"
+            ){ [self] _ in
                 let mainVC = MainViewController()
-                navigationController?.pushViewController(mainVC, animated: true)
+                navigationController?.popToRootViewController(animated: true)
             }
         }
     }
