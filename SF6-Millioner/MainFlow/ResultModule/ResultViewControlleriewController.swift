@@ -199,7 +199,7 @@ private extension ResultViewController {
     func checkAnswer(_ answer: Bool) {
         if answer {
             rectangleImages.reverse()
-            animateRectangleImage()
+            animateForWin()
         } else {
             if currentLevel > 5 && currentLevel < 11 {
                 rectangleImages[10].image = UIImage(named: "Rectangle green")
@@ -215,16 +215,34 @@ private extension ResultViewController {
         }
     }
     
-    func animateRectangleImage() {
-        rectangleImages[currentLevel - 2].image = UIImage(named: "Rectangle green")
-        UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveLinear, animations: { [self] in
-            UIView.modifyAnimations(withRepeatCount: 3, autoreverses: true) {
-                rectangleImages[currentLevel - 2].alpha = 0.0
+    func animateForWin() {
+        rectangleImages[currentLevel - 1].image = UIImage(named: "Rectangle green")
+        if currentLevel == 1 {
+            UIView.animate(
+                withDuration: 0.5,
+                delay: 0.0,
+                options: .curveLinear,
+                animations: { [self] in
+                UIView.modifyAnimations(withRepeatCount: 3, autoreverses: true) {
+                    rectangleImages[currentLevel - 1].alpha = 0.0
+                }
+            }){ [self]_ in
+                rectangleImages[currentLevel - 1].alpha = 1.0
             }
-        }) { [self]_ in
-            rectangleImages[currentLevel - 2].alpha = 1.0
-            rectangleImages[currentLevel - 2].image = UIImage(named: "Rectangle violet")
-            rectangleImages[currentLevel - 1].image = UIImage(named: "Rectangle green")
+        } else {
+            UIView.animate(
+                withDuration: 0.5,
+                delay: 0.0,
+                options: .curveLinear,
+                animations: { [self] in
+                UIView.modifyAnimations(withRepeatCount: 3, autoreverses: true) {
+                    rectangleImages[currentLevel - 2].alpha = 0.0
+                }
+            }) { [self]_ in
+                rectangleImages[currentLevel - 2].alpha = 1.0
+                rectangleImages[currentLevel - 2].image = UIImage(named: "Rectangle violet")
+                rectangleImages[currentLevel - 1].image = UIImage(named: "Rectangle green")
+            }
         }
     }
     
@@ -246,7 +264,6 @@ private extension ResultViewController {
                 title: "You Loser",
                 message: "(You won \(fireproofAmount) RUB)"
             ){ [self] _ in
-                let mainVC = MainViewController()
                 navigationController?.popToRootViewController(animated: true)
             }
         }

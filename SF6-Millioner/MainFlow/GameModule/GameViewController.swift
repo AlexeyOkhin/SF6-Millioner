@@ -226,7 +226,7 @@ class GameViewController: UIViewController {
 
 
     @objc private func showResult(_ sender: UIButton) {
-        let resultVC = ResultViewController(level: game.level, costQuestion: game.costQuestion)
+        let resultVC = ResultViewController(level: game.level, costQuestion: game.costQuestion, answer: true)
         
         progressBar.progress = 0.0
         timer.invalidate()
