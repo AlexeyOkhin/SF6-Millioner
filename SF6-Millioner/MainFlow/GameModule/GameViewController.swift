@@ -178,6 +178,12 @@ class GameViewController: UIViewController {
         questionNumberLabel.text = "Вопрос \(game.level)"
         scoreLabel.text = "\(game.currentQuestion.cost ?? "0")"
         setTitleAnswer()
+        let buttons = [answerAButton, answerBButton, answerCButton, answerDButton]
+
+        for button in buttons {
+            button.isEnabled = true
+            button.alpha = 1.0
+        }
     }
 
     func setTitleAnswer() {
@@ -333,6 +339,7 @@ class GameViewController: UIViewController {
             progressBar.progress = Float(secondsPassed) / Float(game.timeLevel)
         } else {
             timer.invalidate()
+            
         }
     }
     
