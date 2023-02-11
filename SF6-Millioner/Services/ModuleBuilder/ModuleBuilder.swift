@@ -30,7 +30,8 @@ class ModuleBuilder: Builder {
     //FIXME: - прописать свои контроллеры
     
     static func createGameModule() -> UIViewController {
-        return UIViewController()
+        let view = GameViewController()
+        return view
     }
 
     static func createResultModule() -> UIViewController {
