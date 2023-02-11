@@ -11,7 +11,7 @@ struct Question: Decodable {
     let level: Int
     let ask: String
     let correctAnswer: String
-    let wrongAnswers: [String]
+    var wrongAnswers: [String]
     var cost: String?
 
 }
@@ -48,6 +48,8 @@ struct Game {
     func showFiftyFifty() -> (String, String) {
         let correctAnswer = currentQuestion.correctAnswer
         let wrongAnswer = currentQuestion.wrongAnswers.randomElement()!
+        let newArrayWrong = currentQuestion.wrongAnswers.filter { $0 != wrongAnswer }
+        
         return (correctAnswer, wrongAnswer)
     }
 
