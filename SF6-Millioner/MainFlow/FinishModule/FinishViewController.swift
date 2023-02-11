@@ -36,7 +36,8 @@ final class FinishViewController: UIViewController {
         let label = UILabel()
         label.textColor = UIColor.white
         label.font = UIFont.systemFont(ofSize: 24)
-        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.numberOfLines = 2
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         
