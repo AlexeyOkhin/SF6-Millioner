@@ -92,10 +92,7 @@ final class FinishViewController: UIViewController {
         if isWin! {
             failAttemptLabel.text = "You won \(money!) RUB"
         } else {
-            failAttemptLabel.text = """
-            You losed on \(failAttempt!) attempt
-            You won \(money!) RUB
-            """
+            failAttemptLabel.text = "You losed on \(failAttempt!) attempt"
         }
     }
     

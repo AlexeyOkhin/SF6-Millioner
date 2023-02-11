@@ -17,7 +17,8 @@ final class ResultViewController: UIViewController {
     private let rangeForRow = 0 ... 14
     private var currentLevel = Int()
     private var amountOfMoney = [String]()
-    private var answer = Bool()
+    private var isTrueAnswer = Bool()
+    private var fireproofAmount = ""
     
     private var background: UIImageView = {
         let imageView = UIImageView(frame: .zero)
@@ -37,7 +38,7 @@ final class ResultViewController: UIViewController {
     init(level: Int, costQuestion: [String], answer: Bool) {
         self.currentLevel = level
         self.amountOfMoney = costQuestion
-        self.answer = answer
+        self.isTrueAnswer = answer
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -49,18 +50,16 @@ final class ResultViewController: UIViewController {
         super.viewDidLoad()
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         view.addGestureRecognizer(tap)
+        self.hideNavigationBar()
         applyStyle()
         applyLayout()
-        checkAnswer(answer)
+        checkAnswer(isTrueAnswer)
     }
     
     @objc func handleTap() {
-        if answer {
+        if isTrueAnswer {
             navigationController?.popViewController(animated: true)
             dismiss(animated: true, completion: nil)
-        } else {
-            let finishVC = FinishViewController(failAttempt: 0, isWin: answer, money: Int(amountOfMoney[currentLevel - 1]) ?? 0)
-            navigationController?.pushViewController(finishVC, animated: true)
         }
     }
 }
@@ -200,14 +199,45 @@ private extension ResultViewController {
     func checkAnswer(_ answer: Bool) {
         if answer {
             rectangleImages.reverse()
-            rectangleImages[currentLevel - 1].image = UIImage(named: "Rectangle green")
+            animateRectangleImage()
         } else {
             if currentLevel > 5 && currentLevel < 11 {
                 rectangleImages[10].image = UIImage(named: "Rectangle green")
+                animateForLose(rectangleImages[10])
+                fireproofAmount = amountOfMoney[4]
             } else if currentLevel > 10 && currentLevel < 15 {
                 rectangleImages[5].image = UIImage(named: "Rectangle green")
+                animateForLose(rectangleImages[5])
+                fireproofAmount = amountOfMoney[9]
             } else if currentLevel == 15 {
                 rectangleImages[0].image = UIImage(named: "Rectangle green")
+            }
+        }
+    }
+    
+    func animateRectangleImage() {
+        rectangleImages[currentLevel - 2].image = UIImage(named: "Rectangle green")
+        UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveLinear, animations: { [self] in
+            UIView.modifyAnimations(withRepeatCount: 3, autoreverses: true) {
+                rectangleImages[currentLevel - 2].alpha = 0.0
+            }
+        }) { [self]_ in
+            rectangleImages[currentLevel - 2].alpha = 1.0
+            rectangleImages[currentLevel - 2].image = UIImage(named: "Rectangle violet")
+            rectangleImages[currentLevel - 1].image = UIImage(named: "Rectangle green")
+        }
+    }
+    
+    func animateForLose(_ rectangleImages: UIImageView) {
+        UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveLinear, animations: {
+            UIView.modifyAnimations(withRepeatCount: 2, autoreverses: true) {
+                rectangleImages.alpha = 0.0
+            }
+        }) { [self] _ in
+            rectangleImages.alpha = 1.0
+            self.showAlert(title: "You Loser", message: "(You won \(fireproofAmount) RUB)") { [self] _ in
+                let mainVC = MainViewController()
+                navigationController?.pushViewController(mainVC, animated: true)
             }
         }
     }

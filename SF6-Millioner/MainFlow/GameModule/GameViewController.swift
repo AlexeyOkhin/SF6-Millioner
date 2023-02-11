@@ -181,7 +181,7 @@ class GameViewController: UIViewController {
 
     @objc private func showResult() {
         let gameAnswer: Bool = false
-        let resultVC = ResultViewController(level: 7, costQuestion: game.costQuestion, answer: gameAnswer)
+        let resultVC = ResultViewController(level: 11, costQuestion: game.costQuestion, answer: gameAnswer)
         navigationController?.pushViewController(resultVC, animated: true)
     }
 
