@@ -28,7 +28,7 @@ class HiScoreViewController: UIViewController {
     }()
     
     private let hiScoreStorage = try? HiScoreStorage()
-    private var dictionaryHiScore = [String: String]()
+    private var dictionaryHiScore = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,21 +71,22 @@ extension HiScoreViewController: UITableViewDelegate, UITableViewDataSource {
                                                  for: indexPath) as? HiScoreTableViewCell
         do {
             let highScore = try HiScoreStorage()
-            let highScoreValue = highScore.getHiScore().sorted { $0.value > $1.value }.map { ($0.key, $0.value)}
+            let highScoreValue = highScore.getHiScore().map { $0.components(separatedBy: "++")}.sorted { $0[1] < $1[1]}
 
-            cell?.nameLabel.text = highScoreValue[indexPath.row].0
-            cell?.scoreLabel.text = highScoreValue[indexPath.row].1
+            print(highScoreValue)
+            cell?.nameLabel.text = highScoreValue[indexPath.row][0]
+            cell?.scoreLabel.text = highScoreValue[indexPath.row][1]
         } catch {
             print(error)
         }
 
         
-        let dict = Array(dictionaryHiScore)
-        let sortedKeysAndValues = dict.sorted { $0.0 < $1.0 }
-        
-        let key = sortedKeysAndValues[indexPath.row].key
-        let value = sortedKeysAndValues[indexPath.row].value
-        cell?.setup(key, value)
+//        let dict = dictionaryHiScore
+//        let sortedKeysAndValues = dict.sorted { $0[0] < $1[1] }
+//        
+//        let key = sortedKeysAndValues[indexPath.row][0]
+//        let value = sortedKeysAndValues[indexPath.row][1]
+//        cell?.setup(key, value)
         return cell ?? UITableViewCell()
 
     }

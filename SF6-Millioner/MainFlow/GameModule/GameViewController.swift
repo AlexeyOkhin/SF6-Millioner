@@ -151,6 +151,7 @@ final class GameViewController: UIViewController {
     
     lazy private var takeCash: UIButton = {
         let button = UIButton()
+        button.isEnabled = false
         button.layer.cornerRadius = CGFloat(20)
         button.setBackgroundImage(UIImage(named: "takeCash"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -175,6 +176,7 @@ final class GameViewController: UIViewController {
         super.viewWillAppear(animated)
         if game.level > 1 {
             startGame()
+            takeCash.isEnabled = true
             print(game.getCurrentQuestion().correctAnswer)
             showNavigationBar()
         }
@@ -386,13 +388,17 @@ final class GameViewController: UIViewController {
     }
     
     private func finishGame() {
+        saveResult()
         let finishVC = FinishViewController(failAttempt: game.level, isWin: game.isWin, money: String(game.currentSum))
-        
+
         stopGame()
-        let dicHiScore = hiScoreStorage?.getHiScore()
-        
-        hiScoreStorage?.saveHiScore(by: [userName: game.getCurrentQuestion().cost ?? "ноль"])
         self.navigationController?.pushViewController(finishVC, animated: true)
+    }
+
+    private func saveResult() {
+        var dicHiScore = hiScoreStorage?.getHiScore()
+        dicHiScore?.append("\(userName) ++ \(game.getCurrentQuestion().cost ?? "0000")")
+        hiScoreStorage?.saveHiScore(by: dicHiScore ?? [String]())
     }
     
     
