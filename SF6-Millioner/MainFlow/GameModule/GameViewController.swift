@@ -180,6 +180,12 @@ class GameViewController: UIViewController {
         questionNumberLabel.text = "Вопрос \(game.level)"
         scoreLabel.text = "\(game.currentQuestion.cost ?? "0")"
         setTitleAnswer()
+        let buttons = [answerAButton, answerBButton, answerCButton, answerDButton]
+
+        for button in buttons {
+            button.isEnabled = true
+            button.alpha = 1.0
+        }
     }
 
     func setTitleAnswer() {
@@ -233,7 +239,7 @@ class GameViewController: UIViewController {
 
 
     private func checkLevel(_ gameCheckAnswer: Bool) {
-        let resultVC = ResultViewController(level: game.level, costQuestion: game.costQuestion, isTrueAnswer: gameCheckAnswer)
+        let resultVC = ResultViewController(level: game.level, costQuestion: game.costQuestion, answer: gameCheckAnswer)
         
         if game.level > 14 && gameCheckAnswer {
             let finishVC = FinishViewController(failAttempt: game.level, isWin: game.isWin, money: game.currentSum)
@@ -273,24 +279,9 @@ class GameViewController: UIViewController {
     }
   
     @objc private func goFinish(_ sender: UIButton) {
-        let finishVC = FinishViewController(failAttempt: game.level, isWin: game.isWin, money: game.currentSum)
-        
-        progressBar.progress = 0.0
-        timer.invalidate()
-        timerSound.stop()
-        secondsPassed = 0
-        
-        do {
-            let hiScore = try HiScoreStorage()
-            let highScoreValue = Int((hiScore.getHiScore()?.components(separatedBy: "--")[1])!) ?? 0
-            if highScoreValue < game.level {
-                hiScore.saveHiScore(by: username, new: game.level)
-            }
-        } catch {
-            print(error)
-        }
-        
-        self.navigationController?.pushViewController(finishVC, animated: true)
+
+        finishGame()
+
     }
 
     @objc private func fiftyFiftyPressed() {
@@ -345,7 +336,20 @@ class GameViewController: UIViewController {
             progressBar.progress = Float(secondsPassed) / Float(game.timeLevel)
         } else {
             timer.invalidate()
+            
+            finishGame()
         }
+    }
+    
+    func finishGame() {
+        let finishVC = FinishViewController(failAttempt: game.level, isWin: game.isWin, money: game.currentSum)
+        
+        progressBar.progress = 0.0
+        timer.invalidate()
+        timerSound.stop()
+        secondsPassed = 0
+        
+        self.navigationController?.pushViewController(finishVC, animated: true)
     }
     
     

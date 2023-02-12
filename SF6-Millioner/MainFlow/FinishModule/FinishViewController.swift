@@ -36,7 +36,8 @@ final class FinishViewController: UIViewController {
         let label = UILabel()
         label.textColor = UIColor.white
         label.font = UIFont.systemFont(ofSize: 24)
-        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.numberOfLines = 2
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         
@@ -54,7 +55,7 @@ final class FinishViewController: UIViewController {
     private var playAgainButton: UIButton = {
         let button = UIButton(frame: CGRect(x: 20, y: 500, width: 300, height: 100))
         button.backgroundColor = UIColor(hexString: "#34B83A")
-        button.setTitle("PLAY AGAIN", for: .normal)
+        button.setTitle("Играть еще раз", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 30, weight: .bold)
         button.layer.cornerRadius = CGFloat(20)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -92,9 +93,19 @@ final class FinishViewController: UIViewController {
         if isWin! {
             failAttemptLabel.text = "Ты выиграл \(money!) RUB"
         } else {
+            var used = "Использовано"
+            var attemptWord = "попыток"
+            
+            if failAttempt == 1 {
+                used = "Использована"
+                attemptWord = "попытка"
+            } else if failAttempt == 2 || failAttempt == 3 || failAttempt == 4 {
+                attemptWord = "попытки"
+            }
+            
             failAttemptLabel.text = """
             Ты проиграл!
-            Использовано \(failAttempt!) попыток.
+            \(used) \(failAttempt!) \(attemptWord).
             Ты выиграл \(money!) RUB
             """
         }
@@ -147,7 +158,7 @@ final class FinishViewController: UIViewController {
     }
     
     @objc private func playAgainPressed() {
-        // TODO: Вернуться на начало игры.
-        print("Pressed!")
+        let mainVC = MainViewController()
+        self.navigationController?.pushViewController(mainVC, animated: true)
     }
 }
