@@ -282,7 +282,10 @@ class GameViewController: UIViewController {
         
         do {
             let hiScore = try HiScoreStorage()
-            hiScore.saveHiScore(by: username, new: game.level)
+            let highScoreValue = Int((hiScore.getHiScore()?.components(separatedBy: "--")[1])!) ?? 0
+            if highScoreValue < game.level {
+                hiScore.saveHiScore(by: username, new: game.level)
+            }
         } catch {
             print(error)
         }
