@@ -37,7 +37,7 @@ final class FinishViewController: UIViewController {
         label.textColor = UIColor.white
         label.font = UIFont.systemFont(ofSize: 24)
         label.lineBreakMode = .byWordWrapping
-        label.numberOfLines = 2
+        label.numberOfLines = 0
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         
@@ -132,7 +132,7 @@ final class FinishViewController: UIViewController {
         NSLayoutConstraint.activate([
             failAttemptLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             failAttemptLabel.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 5),
-            failAttemptLabel.heightAnchor.constraint(equalToConstant: 84),
+            failAttemptLabel.heightAnchor.constraint(equalToConstant: 124),
         ])
         
         NSLayoutConstraint.activate([
