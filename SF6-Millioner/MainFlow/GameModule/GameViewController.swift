@@ -9,15 +9,17 @@ import UIKit
 import AVFoundation
 
 class GameViewController: UIViewController {
-
+    
     //MARK: - Properties
-    var username = ""
-    var game = Game(fireproofAmount: 0)
+
+    var game = Game(nameGamer: "Василий", fireproofAmount: 0)
+
     var audioCheckAnswer: AVAudioPlayer!
     var timer = Timer()
     var timerSound: AVAudioPlayer!
     var secondsPassed = 0
-
+    private let hiScoreStorage = try? HiScoreStorage()
+    
     //MARK: - Private Properties
     private var background: UIImageView = {
         let imageView = UIImageView()
@@ -39,7 +41,7 @@ class GameViewController: UIViewController {
         
         return labelView
     }()
-
+    
     private var questionNumberLabel: UILabel = {
         let labelView = UILabel()
         labelView.text = "Вопрос 5"
@@ -70,7 +72,7 @@ class GameViewController: UIViewController {
         progress.trackTintColor = .lightGray
         progress.translatesAutoresizingMaskIntoConstraints = false
         progress.heightAnchor.constraint(equalToConstant: 10).isActive = true
-
+        
         return progress
     }()
     
@@ -107,7 +109,7 @@ class GameViewController: UIViewController {
         
         return button
     }()
-
+    
     lazy private var answerDButton: UIButton = {
         let button = UIButton()
         button.setBackgroundImage(UIImage(named: "Rectangle blue"), for: .normal)
@@ -152,13 +154,14 @@ class GameViewController: UIViewController {
         button.setBackgroundImage(UIImage(named: "takeCash"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(goFinish), for: .touchUpInside)
-
         return button
     }()
     
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        guard let hiScoreStorage else { return }
+        game.hiScoreDictionary = hiScoreStorage.getHiScore()
 
         settingNavigationBar()
         initSubviews()
@@ -174,7 +177,7 @@ class GameViewController: UIViewController {
             print(game.currentQuestion.correctAnswer)
         }
     }
-  
+    
     func startGame() {
         questionLabel.text = game.currentQuestion.ask
         questionNumberLabel.text = "Вопрос \(game.level)"
@@ -187,7 +190,7 @@ class GameViewController: UIViewController {
             button.alpha = 1.0
         }
     }
-
+    
     func setTitleAnswer() {
         let buttons = [answerAButton, answerBButton, answerCButton, answerDButton].shuffled()
         let answers = game.currentQuestion.wrongAnswers + [game.currentQuestion.correctAnswer]
@@ -236,13 +239,17 @@ class GameViewController: UIViewController {
                            completion: nil)
         }
     }
-
-
+    
     private func checkLevel(_ gameCheckAnswer: Bool) {
         let resultVC = ResultViewController(level: game.level, costQuestion: game.costQuestion, answer: gameCheckAnswer)
         
+        game.saveHiScore(by: game.nameGamer, new: game.currentQuestion.cost ?? "1 миллион")
+        hiScoreStorage?.saveHiScore(by: game.hiScoreDictionary)
+        print(hiScoreStorage?.getHiScore())
+        
         if game.level > 14 && gameCheckAnswer {
-            let finishVC = FinishViewController(failAttempt: game.level, isWin: game.isWin, money: game.currentSum)
+            
+            let finishVC = FinishViewController(failAttempt: game.level, isWin: game.isWin, money: game.currentQuestion.cost ?? "1 миллион")
             
             progressBar.progress = 0.0
             timer.invalidate()
@@ -258,7 +265,7 @@ class GameViewController: UIViewController {
     
     @objc private func showResult(_ sender: UIButton) {
         let gameCheckAnswer = game.checkAnswer(answer: sender.currentTitle ?? "")
-
+        
         progressBar.progress = 0.0
         timer.invalidate()
         timerSound.stop()
@@ -277,18 +284,35 @@ class GameViewController: UIViewController {
             self.checkLevel(gameCheckAnswer)
         }
     }
-  
+    
     @objc private func goFinish(_ sender: UIButton) {
+
 
         finishGame()
 
-    }
 
+    }
+    
+    private func hiScoreStorageAndName() {
+            guard let hiScoreStorage else {return}
+            
+            if game.level == 1 {
+                game.saveHiScore(by: game.nameGamer, new: "0")
+                hiScoreStorage.saveHiScore(by: game.hiScoreDictionary)
+                
+            } else {
+                let currentCost = game.costQuestion[game.level - 2]
+                game.saveHiScore(by: game.nameGamer, new: currentCost)
+                hiScoreStorage.saveHiScore(by: game.hiScoreDictionary)
+            }
+            print(hiScoreStorage.getHiScore())
+    }
+    
     @objc private func fiftyFiftyPressed() {
         let a = game.showFiftyFifty()
         let answers = [a.0, a.1]
         let buttons = [answerAButton, answerBButton, answerCButton, answerDButton]
-
+        
         for button in buttons {
             if !answers.contains(button.currentTitle!) {
                 button.isEnabled = false
@@ -296,11 +320,11 @@ class GameViewController: UIViewController {
             }
         }
     }
-
+    
     @objc private func hallHelpPressed() {
         showAlert(title: "Зал выбрал ответ:", message: game.showHallHelp(persent: 70))
     }
-
+    
     @objc private func callFriendPressed() {
         showAlert(title: "Друг считает что это:", message: game.showHallHelp(persent: 80))
     }
@@ -362,7 +386,7 @@ class GameViewController: UIViewController {
             background.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             background.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
-
+        
         NSLayoutConstraint.activate([
             questionLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             questionLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -7),
@@ -413,16 +437,16 @@ class GameViewController: UIViewController {
         helpStackView.distribution = .fillEqually
         helpStackView.spacing = 10
         helpStackView.translatesAutoresizingMaskIntoConstraints = false
-
+        
         view.addSubview(helpStackView)
-
+        
         NSLayoutConstraint.activate([
             helpStackView.topAnchor.constraint(equalTo: answerStackView.bottomAnchor, constant: 40),
             helpStackView.heightAnchor.constraint(equalToConstant: 80),
             helpStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             helpStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
- 
+        
         NSLayoutConstraint.activate([
             takeCash.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             takeCash.widthAnchor.constraint(equalToConstant: 50),

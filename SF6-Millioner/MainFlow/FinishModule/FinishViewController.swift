@@ -12,9 +12,9 @@ final class FinishViewController: UIViewController {
     
     private var failAttempt: Int?
     private var isWin: Bool?
-    private var money: Int?
+    private var money: String?
     
-    init(failAttempt: Int, isWin: Bool, money: Int) {
+    init(failAttempt: Int, isWin: Bool, money: String) {
         self.failAttempt = failAttempt
         self.isWin = isWin
         self.money = money
@@ -91,7 +91,7 @@ final class FinishViewController: UIViewController {
     
     private func setupFailAttemptLabel() {
         if isWin! {
-            failAttemptLabel.text = "Ты выиграл \(money!) RUB"
+            failAttemptLabel.text = "Ты выиграл \(money ?? "0")) RUB"
         } else {
             var used = "Использовано"
             var attemptWord = "попыток"
@@ -158,7 +158,8 @@ final class FinishViewController: UIViewController {
     }
     
     @objc private func playAgainPressed() {
-        let mainVC = MainViewController()
-        self.navigationController?.pushViewController(mainVC, animated: true)
+
+        navigationController?.popToRootViewController(animated: true)
+
     }
 }

@@ -236,7 +236,6 @@ private extension ResultViewController {
                     }
                 }){ [self]_ in
                     rectangleImages[currentLevel - 1].alpha = 1.0
-
                 }
         } else {
             rectangleImages[currentLevel - 2].image = UIImage(named: "Rectangle green")
@@ -251,9 +250,12 @@ private extension ResultViewController {
                     }
                 }) { [self]_ in
                     rectangleImages[currentLevel - 2].alpha = 1.0
-                    rectangleImages[currentLevel - 2].image = UIImage(named: "Rectangle violet")
+                    if currentLevel == 6 || currentLevel == 11 {
+                        rectangleImages[currentLevel - 2].image = UIImage(named: "Rectangle blue")
+                    } else {
+                        rectangleImages[currentLevel - 2].image = UIImage(named: "Rectangle violet")
+                    }
                     rectangleImages[currentLevel - 1].image = UIImage(named: "Rectangle green")
-
                 }
         }
     }
