@@ -11,7 +11,8 @@ import AVFoundation
 class GameViewController: UIViewController {
 
     //MARK: - Properties
-    var game = Game(nameGamer: "Алексей", fireproofAmount: 0)
+    var username = ""
+    var game = Game(fireproofAmount: 0)
     var audioCheckAnswer: AVAudioPlayer!
     var timer = Timer()
     var timerSound: AVAudioPlayer!
@@ -163,6 +164,7 @@ class GameViewController: UIViewController {
         initSubviews()
         setupConstraints()
         startGame()
+        game.nameGamer = username
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -277,6 +279,13 @@ class GameViewController: UIViewController {
         timer.invalidate()
         timerSound.stop()
         secondsPassed = 0
+        
+        do {
+            let hiScore = try HiScoreStorage()
+            hiScore.saveHiScore(by: username, new: game.level)
+        } catch {
+            print(error)
+        }
         
         self.navigationController?.pushViewController(finishVC, animated: true)
     }
