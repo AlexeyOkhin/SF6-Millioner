@@ -13,7 +13,7 @@ class HiScoreTableViewCell: UITableViewCell {
     
     //MARK: - Private Properties
     
-    private let nameLabel: UILabel = {
+    let nameLabel: UILabel = {
         let label = UILabel()
         label.text = "Name"
         label.font = .systemFont(ofSize: 20)
@@ -21,7 +21,7 @@ class HiScoreTableViewCell: UITableViewCell {
         return label
     }()
     
-    private let scoreLabel: UILabel = {
+    let scoreLabel: UILabel = {
         let label = UILabel()
         label.text = "0"
         label.font = .systemFont(ofSize: 20)

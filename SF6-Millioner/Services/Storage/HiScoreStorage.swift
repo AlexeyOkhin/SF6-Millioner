@@ -40,6 +40,18 @@ struct HiScoreStorage {
     func getHiScore() -> String? {
         return storage.string(forKey: keyStorage)
     }
+    
+    func getAmountOfStorage() -> Int {
+        return storage.dictionaryRepresentation().filter {(key, value) in
+            return key == self.keyStorage
+        }.values.count
+    }
+    
+    func getDataFromStorage() {
+        print(storage.dictionaryRepresentation().filter {(key, value) in
+            return key == self.keyStorage
+        }.values)
+    }
 
     func resetViewCounterStorage() {
         storage.removeSuite(named: suiteName)

@@ -53,22 +53,36 @@ class HiScoreViewController: UIViewController {
 //MARK: - UITableViewDelegate, UITableViewDataSource
 
 extension HiScoreViewController: UITableViewDelegate, UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        40
+        do {
+            let highScore = try HiScoreStorage()
+            return highScore.getAmountOfStorage()
+        } catch {
+            print(error)
+        }
+        
+        return 1
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: HiScoreTableViewCell.identifier,
-                                                       for: indexPath) as? HiScoreTableViewCell else {
-            return UITableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: HiScoreTableViewCell.identifier,
+                                                 for: indexPath) as? HiScoreTableViewCell
+        do {
+            let highScore = try HiScoreStorage()
+            let highScoreValue = highScore.getHiScore()?.components(separatedBy: "--")
+            cell?.nameLabel.text = highScoreValue?[0]
+            cell?.scoreLabel.text = highScoreValue?[1]
+        } catch {
+            print(error)
         }
-        return cell
+                
+        return cell!
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         55
     }
+    
 }
 
 //MARK: - Constraints

@@ -11,7 +11,8 @@ import AVFoundation
 class GameViewController: UIViewController {
 
     //MARK: - Properties
-    var game = Game(nameGamer: "Алексей", fireproofAmount: 0)
+    var username = ""
+    var game = Game(fireproofAmount: 0)
     var audioCheckAnswer: AVAudioPlayer!
     var timer = Timer()
     var timerSound: AVAudioPlayer!
@@ -163,6 +164,7 @@ class GameViewController: UIViewController {
         initSubviews()
         setupConstraints()
         startGame()
+        game.nameGamer = username
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -277,7 +279,9 @@ class GameViewController: UIViewController {
     }
   
     @objc private func goFinish(_ sender: UIButton) {
+
         finishGame()
+
     }
 
     @objc private func fiftyFiftyPressed() {
