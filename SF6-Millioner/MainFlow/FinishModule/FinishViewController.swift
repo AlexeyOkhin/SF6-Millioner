@@ -147,7 +147,7 @@ final class FinishViewController: UIViewController {
     }
     
     @objc private func playAgainPressed() {
-        // TODO: Вернуться на начало игры.
-        print("Pressed!")
+        let mainVC = MainViewController()
+        self.navigationController?.pushViewController(mainVC, animated: true)
     }
 }
