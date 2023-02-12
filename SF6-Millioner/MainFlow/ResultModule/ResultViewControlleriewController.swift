@@ -281,7 +281,7 @@ private extension ResultViewController {
     func showAlert() {
         showAlert(
             title: "You Loser",
-            message: "(You won \(fireproofAmount) RUB)"
+            message: "(You won \(fireproofAmount))"
         ){ [self] _ in
             navigationController?.popToRootViewController(animated: true)
         }

@@ -21,7 +21,7 @@ struct Game {
     var timeLevel = 30
     var timeAfterResult = 5
     var level = 1
-    var nameGamer: String
+    var nameGamer: String = ""
     var fireproofAmount: Int
     var currentSum = 0
     var live = 1

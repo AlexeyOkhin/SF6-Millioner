@@ -11,7 +11,9 @@ import AVFoundation
 class GameViewController: UIViewController {
     
     //MARK: - Properties
+
     var game = Game(nameGamer: "Василий", fireproofAmount: 0)
+
     var audioCheckAnswer: AVAudioPlayer!
     var timer = Timer()
     var timerSound: AVAudioPlayer!
@@ -165,6 +167,7 @@ class GameViewController: UIViewController {
         initSubviews()
         setupConstraints()
         startGame()
+        game.nameGamer = username
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -180,6 +183,12 @@ class GameViewController: UIViewController {
         questionNumberLabel.text = "Вопрос \(game.level)"
         scoreLabel.text = "\(game.currentQuestion.cost ?? "0")"
         setTitleAnswer()
+        let buttons = [answerAButton, answerBButton, answerCButton, answerDButton]
+
+        for button in buttons {
+            button.isEnabled = true
+            button.alpha = 1.0
+        }
     }
     
     func setTitleAnswer() {
@@ -232,7 +241,7 @@ class GameViewController: UIViewController {
     }
     
     private func checkLevel(_ gameCheckAnswer: Bool) {
-        let resultVC = ResultViewController(level: game.level, costQuestion: game.costQuestion, isTrueAnswer: gameCheckAnswer)
+        let resultVC = ResultViewController(level: game.level, costQuestion: game.costQuestion, answer: gameCheckAnswer)
         
         game.saveHiScore(by: game.nameGamer, new: game.currentQuestion.cost ?? "1 миллион")
         hiScoreStorage?.saveHiScore(by: game.hiScoreDictionary)
@@ -277,16 +286,11 @@ class GameViewController: UIViewController {
     }
     
     @objc private func goFinish(_ sender: UIButton) {
-        let finishVC = FinishViewController(failAttempt: game.level, isWin: game.isWin, money: game.currentQuestion.cost ?? "0")
-        
-        progressBar.progress = 0.0
-        timer.invalidate()
-        timerSound.stop()
-        secondsPassed = 0
-        
-        hiScoreStorageAndName()
-        
-        self.navigationController?.pushViewController(finishVC, animated: true)
+
+
+        finishGame()
+
+
     }
     
     private func hiScoreStorageAndName() {
@@ -356,7 +360,20 @@ class GameViewController: UIViewController {
             progressBar.progress = Float(secondsPassed) / Float(game.timeLevel)
         } else {
             timer.invalidate()
+            
+            finishGame()
         }
+    }
+    
+    func finishGame() {
+        let finishVC = FinishViewController(failAttempt: game.level, isWin: game.isWin, money: game.currentSum)
+        
+        progressBar.progress = 0.0
+        timer.invalidate()
+        timerSound.stop()
+        secondsPassed = 0
+        
+        self.navigationController?.pushViewController(finishVC, animated: true)
     }
     
     

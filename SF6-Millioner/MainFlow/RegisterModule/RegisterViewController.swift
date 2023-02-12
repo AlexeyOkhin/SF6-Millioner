@@ -55,6 +55,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                                                   width: 10,
                                                   height: textField.frame.height))
         textField.leftViewMode = .always
+        textField.tintColor = .white
         textField.clearButtonMode = .always
         textField.returnKeyType = .done
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -81,6 +82,8 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         view.addSubview(background)
         view.addSubview(goldImageView)
         view.addSubview(logoImageView)
+        
+        addTaps()
         
         NSLayoutConstraint.activate([
             background.topAnchor.constraint(equalTo: view.topAnchor),
@@ -121,19 +124,36 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         ])
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        usernameTextField.text = ""
+    }
+    
     @objc private func registerButtonPressed() {
         let mainVC = MainViewController()
         mainVC.modalPresentationStyle = .fullScreen
+
 //        mainVC.username = usernameTextField.text!.count > 0 ? usernameTextField.text : "User"
         // FIXME: передать usernameTextField.text в модель
         mainVC.welcomeLabel.text = "Добро пожаловать \(usernameTextField.text!)!"
         
+
         self.navigationController?.pushViewController(mainVC, animated: true)
         navigationItem.backButtonTitle = "Назад"
     }
     
+    private func addTaps() {
+        let tapScreen = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        view.addGestureRecognizer(tapScreen)
+    }
+    
+    @objc private func hideKeyboard() {
+        view.endEditing(true)
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        registerButtonPressed()
+        usernameTextField.resignFirstResponder()
         
         return true
     }
