@@ -22,6 +22,9 @@ struct Game {
     var timeLevel = 30
     var timeAfterResult = 5
     var level = 1
+    var isEnebleFiftyFifty = true
+    var isEnebleFHopeHalp = true
+    var isEnebleSecondLife = true
     var nameGamer: String = ""
     var fireproofAmount: Int
     var currentSum = 0

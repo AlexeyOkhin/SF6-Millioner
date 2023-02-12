@@ -324,14 +324,20 @@ final class GameViewController: UIViewController {
                 button.alpha = 0.5
             }
         }
+        fiftyFifty.isEnabled = false
+        game.isEnebleFiftyFifty = false
     }
     
     @objc private func hallHelpPressed() {
         showAlert(title: "Зал выбрал ответ:", message: game.showHallHelp(persent: 70))
+        hallHelp.isEnabled = false
+        game.isEnebleFHopeHalp = false
     }
     
     @objc private func callFriendPressed() {
-        showAlert(title: "Друг считает что это:", message: game.showHallHelp(persent: 80))
+        showAlert(title: "У вас есть право на ошибку:", message: "Используйте его с умом)")
+        rightToMistake.isEnabled = false
+        game.isEnebleSecondLife = false
     }
     
     private func settingNavigationBar() {
