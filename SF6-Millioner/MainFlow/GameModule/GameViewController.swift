@@ -178,6 +178,12 @@ class GameViewController: UIViewController {
         questionNumberLabel.text = "Вопрос \(game.level)"
         scoreLabel.text = "\(game.currentQuestion.cost ?? "0")"
         setTitleAnswer()
+        let buttons = [answerAButton, answerBButton, answerCButton, answerDButton]
+
+        for button in buttons {
+            button.isEnabled = true
+            button.alpha = 1.0
+        }
     }
 
     func setTitleAnswer() {
@@ -271,14 +277,7 @@ class GameViewController: UIViewController {
     }
   
     @objc private func goFinish(_ sender: UIButton) {
-        let finishVC = FinishViewController(failAttempt: game.level, isWin: game.isWin, money: game.currentSum)
-        
-        progressBar.progress = 0.0
-        timer.invalidate()
-        timerSound.stop()
-        secondsPassed = 0
-        
-        self.navigationController?.pushViewController(finishVC, animated: true)
+        finishGame()
     }
 
     @objc private func fiftyFiftyPressed() {
@@ -333,7 +332,20 @@ class GameViewController: UIViewController {
             progressBar.progress = Float(secondsPassed) / Float(game.timeLevel)
         } else {
             timer.invalidate()
+            
+            finishGame()
         }
+    }
+    
+    func finishGame() {
+        let finishVC = FinishViewController(failAttempt: game.level, isWin: game.isWin, money: game.currentSum)
+        
+        progressBar.progress = 0.0
+        timer.invalidate()
+        timerSound.stop()
+        secondsPassed = 0
+        
+        self.navigationController?.pushViewController(finishVC, animated: true)
     }
     
     
