@@ -252,9 +252,10 @@ final class GameViewController: UIViewController {
         let resultVC = ResultViewController(level: game.level, costQuestion: game.costQuestion, isTrueAnswer: gameCheckAnswer)
 
         if game.level > 14 && gameCheckAnswer {
-            
+            game.isWin = true
             let finishVC = FinishViewController(failAttempt: game.level, isWin: game.isWin, money: game.getCurrentQuestion().cost ?? "1 миллион")
             game.currentSum = game.currentQuestion?.cost ?? "0000"
+            saveResult()
             progressBar.progress = 0.0
             timer.invalidate()
             timerSound.stop()
