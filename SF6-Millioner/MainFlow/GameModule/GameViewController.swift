@@ -8,19 +8,20 @@
 import UIKit
 import AVFoundation
 
-class GameViewController: UIViewController {
+final class GameViewController: UIViewController {
     
     //MARK: - Properties
+    var userName: String = "Ananymus"
 
-    var game = Game(nameGamer: "Василий", fireproofAmount: 0)
-
-    var audioCheckAnswer: AVAudioPlayer!
-    var timer = Timer()
-    var timerSound: AVAudioPlayer!
-    var secondsPassed = 0
-    private let hiScoreStorage = try? HiScoreStorage()
-    
     //MARK: - Private Properties
+
+    private var secondsPassed = 0
+    private var audioCheckAnswer: AVAudioPlayer!
+    private var timer = Timer()
+    private var timerSound: AVAudioPlayer!
+    private let hiScoreStorage = try? HiScoreStorage()
+    private var game = Game(nameGamer: "Василий", fireproofAmount: 0)
+
     private var background: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "background")
@@ -160,14 +161,14 @@ class GameViewController: UIViewController {
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        guard let hiScoreStorage else { return }
-        game.hiScoreDictionary = hiScoreStorage.getHiScore()
+        //guard let hiScoreStorage else { return }
+       // game.hiScoreDictionary = hiScoreStorage.getHiScore()
 
         settingNavigationBar()
         initSubviews()
         setupConstraints()
         startGame()
-        game.nameGamer = username
+        //game.nameGamer = username
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -177,8 +178,14 @@ class GameViewController: UIViewController {
             print(game.currentQuestion.correctAnswer)
         }
     }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        stopGame()
+    }
+
     
-    func startGame() {
+    private func startGame() {
         questionLabel.text = game.currentQuestion.ask
         questionNumberLabel.text = "Вопрос \(game.level)"
         scoreLabel.text = "\(game.currentQuestion.cost ?? "0")"
@@ -191,7 +198,7 @@ class GameViewController: UIViewController {
         }
     }
     
-    func setTitleAnswer() {
+    private func setTitleAnswer() {
         let buttons = [answerAButton, answerBButton, answerCButton, answerDButton].shuffled()
         let answers = game.currentQuestion.wrongAnswers + [game.currentQuestion.correctAnswer]
         for (num, button) in buttons.enumerated() {
@@ -203,7 +210,7 @@ class GameViewController: UIViewController {
     
     
     //MARK: - Func for Music and Timer
-    func setTimer() {
+    private func setTimer() {
         timer.invalidate()
         progressBar.progress = 0.0
         playSound()
@@ -211,14 +218,14 @@ class GameViewController: UIViewController {
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateCounter), userInfo: nil, repeats: true)
     }
     
-    func playSound() {
+    private func playSound() {
         let url = Bundle.main.url(forResource: "timerSound", withExtension: "mp3")
         timerSound = try! AVAudioPlayer(contentsOf: url!)
         timerSound.volume = 0.1
         timerSound.play()
     }
     
-    func playCheckSound() {
+    private func playCheckSound() {
         let check = Bundle.main.url(forResource: "checkAnswer", withExtension: "mp3")
         audioCheckAnswer = try! AVAudioPlayer(contentsOf: check!)
         audioCheckAnswer.volume = 0.1
@@ -226,7 +233,7 @@ class GameViewController: UIViewController {
     }
     
     //Blink the button
-    func animateButton(_ sender: UIButton, playing: Bool) {
+    private func animateButton(_ sender: UIButton, playing: Bool) {
         if playing {
             UIView.animate(withDuration: 0.5,
                            delay: 0,
@@ -241,11 +248,12 @@ class GameViewController: UIViewController {
     }
     
     private func checkLevel(_ gameCheckAnswer: Bool) {
-        let resultVC = ResultViewController(level: game.level, costQuestion: game.costQuestion, answer: gameCheckAnswer)
+        //let resultVC = ResultViewController(level: game.level, costQuestion: game.costQuestion, answer: gameCheckAnswer)
+        let resultVC = ResultViewController(level: game.level, costQuestion: game.costQuestion, isTrueAnswer: gameCheckAnswer)
         
-        game.saveHiScore(by: game.nameGamer, new: game.currentQuestion.cost ?? "1 миллион")
-        hiScoreStorage?.saveHiScore(by: game.hiScoreDictionary)
-        print(hiScoreStorage?.getHiScore())
+//        game.saveHiScore(by: game.nameGamer, new: game.currentQuestion.cost ?? "1 миллион")
+//        hiScoreStorage?.saveHiScore(by: game.hiScoreDictionary)
+//        print(hiScoreStorage?.getHiScore())
         
         if game.level > 14 && gameCheckAnswer {
             
@@ -286,27 +294,23 @@ class GameViewController: UIViewController {
     }
     
     @objc private func goFinish(_ sender: UIButton) {
-
-
         finishGame()
-
-
     }
     
-    private func hiScoreStorageAndName() {
-            guard let hiScoreStorage else {return}
-            
-            if game.level == 1 {
-                game.saveHiScore(by: game.nameGamer, new: "0")
-                hiScoreStorage.saveHiScore(by: game.hiScoreDictionary)
-                
-            } else {
-                let currentCost = game.costQuestion[game.level - 2]
-                game.saveHiScore(by: game.nameGamer, new: currentCost)
-                hiScoreStorage.saveHiScore(by: game.hiScoreDictionary)
-            }
-            print(hiScoreStorage.getHiScore())
-    }
+//    private func hiScoreStorageAndName() {
+//            guard let hiScoreStorage else {return}
+//
+//            if game.level == 1 {
+//                game.saveHiScore(by: game.nameGamer, new: "0")
+//                hiScoreStorage.saveHiScore(by: game.hiScoreDictionary)
+//
+//            } else {
+//                let currentCost = game.costQuestion[game.level - 2]
+//                game.saveHiScore(by: game.nameGamer, new: currentCost)
+//                hiScoreStorage.saveHiScore(by: game.hiScoreDictionary)
+//            }
+//            print(hiScoreStorage.getHiScore())
+//    }
     
     @objc private func fiftyFiftyPressed() {
         let a = game.showFiftyFifty()
@@ -354,7 +358,7 @@ class GameViewController: UIViewController {
         self.view.addSubview(takeCash)
     }
     
-    @objc func updateCounter() {
+    @objc private func updateCounter() {
         if secondsPassed < game.timeLevel {
             secondsPassed += 1
             progressBar.progress = Float(secondsPassed) / Float(game.timeLevel)
@@ -364,9 +368,16 @@ class GameViewController: UIViewController {
             finishGame()
         }
     }
+
+    private func stopGame() {
+        progressBar.progress = 0.0
+        timer.invalidate()
+        timerSound.stop()
+        secondsPassed = 0
+    }
     
-    func finishGame() {
-        let finishVC = FinishViewController(failAttempt: game.level, isWin: game.isWin, money: game.currentSum)
+    private func finishGame() {
+        let finishVC = FinishViewController(failAttempt: game.level, isWin: game.isWin, money: String(game.currentSum))
         
         progressBar.progress = 0.0
         timer.invalidate()

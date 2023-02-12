@@ -117,7 +117,7 @@ class MainViewController: UIViewController {
     
     @objc private func startButtonTapped() {
         let gameVC = GameViewController()
-        gameVC.username = username
+        gameVC.userName = username
         navigationController?.pushViewController(gameVC, animated: true)
         
 //        let registerVC = RegisterViewController()

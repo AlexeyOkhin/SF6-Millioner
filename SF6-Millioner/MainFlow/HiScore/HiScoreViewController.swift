@@ -66,9 +66,10 @@ extension HiScoreViewController: UITableViewDelegate, UITableViewDataSource {
                                                  for: indexPath) as? HiScoreTableViewCell
         do {
             let highScore = try HiScoreStorage()
-            let highScoreValue = highScore.getHiScore()?.components(separatedBy: "--")
-            cell?.nameLabel.text = highScoreValue?[0]
-            cell?.scoreLabel.text = highScoreValue?[1]
+            let highScoreValue = highScore.getHiScore().sorted { $0.value > $1.value }.map { ($0.key, $0.value)}
+
+            cell?.nameLabel.text = highScoreValue[indexPath.row].0
+            cell?.scoreLabel.text = highScoreValue[indexPath.row].1
         } catch {
             print(error)
         }
@@ -79,8 +80,8 @@ extension HiScoreViewController: UITableViewDelegate, UITableViewDataSource {
         
         let key = sortedKeysAndValues[indexPath.row].key
         let value = sortedKeysAndValues[indexPath.row].value
-        cell.setup(key, value)
-        return cell
+        cell?.setup(key, value)
+        return cell ?? UITableViewCell()
 
     }
     

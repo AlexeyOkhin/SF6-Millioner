@@ -68,7 +68,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         button.setBackgroundImage(UIImage(named: "Rectangle blue"), for: .normal)
         button.tintColor = .white
         button.setTitle("Зарегистрироваться", for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 25, weight: .bold)
+        button.titleLabel?.font = .systemFont(ofSize: 25, weight: .regular)
         button.layer.cornerRadius = CGFloat(15)
         button.translatesAutoresizingMaskIntoConstraints = false
         
@@ -85,6 +85,33 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         
         addTaps()
         
+        setupConstraints()
+        
+        usernameTextField.delegate = self
+
+        let stackView = UIStackView(arrangedSubviews: [usernameLabel, usernameTextField, registerButton])
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
+        stackView.spacing = 20
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+
+        view.addSubview(stackView)
+
+        NSLayoutConstraint.activate([
+            stackView.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 15),
+            stackView.heightAnchor.constraint(equalToConstant: 160),
+            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+        ])
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        usernameTextField.text = ""
+    }
+
+    private func setupConstraints() {
         NSLayoutConstraint.activate([
             background.topAnchor.constraint(equalTo: view.topAnchor),
             background.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -105,40 +132,18 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             logoImageView.heightAnchor.constraint(equalToConstant: 170),
             logoImageView.widthAnchor.constraint(equalToConstant: 170)
         ])
-        
-        usernameTextField.delegate = self
-
-        let stackView = UIStackView(arrangedSubviews: [usernameLabel, usernameTextField, registerButton])
-        stackView.axis = .vertical
-        stackView.distribution = .fillEqually
-        stackView.spacing = 20
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-
-        view.addSubview(stackView)
-
-        NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 15),
-            stackView.heightAnchor.constraint(equalToConstant: 160),
-            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
-        ])
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        usernameTextField.text = ""
     }
     
     @objc private func registerButtonPressed() {
         let mainVC = MainViewController()
-        mainVC.modalPresentationStyle = .fullScreen
+        //mainVC.username =
+        //mainVC.modalPresentationStyle = .fullScreen
 
 //        mainVC.username = usernameTextField.text!.count > 0 ? usernameTextField.text : "User"
         // FIXME: передать usernameTextField.text в модель
-        mainVC.welcomeLabel.text = "Добро пожаловать \(usernameTextField.text!)!"
-        
-
+        mainVC.welcomeLabel.text = "Добро пожаловать \(usernameTextField.text ?? "")!"
+        mainVC.username = usernameTextField.text ?? ""
+        hideKeyboard()
         self.navigationController?.pushViewController(mainVC, animated: true)
         navigationItem.backButtonTitle = "Назад"
     }
