@@ -176,6 +176,7 @@ final class GameViewController: UIViewController {
         if game.level > 1 {
             startGame()
             print(game.currentQuestion.correctAnswer)
+            showNavigationBar()
         }
     }
 

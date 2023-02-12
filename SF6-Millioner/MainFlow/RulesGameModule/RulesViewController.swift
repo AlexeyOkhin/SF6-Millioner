@@ -33,8 +33,8 @@ class RuleViewController: UIViewController{
         
         view.addSubview(backgroundImageView)
         view.addSubview(rulesLabel)
-        
         settingNavigationBar()
+        showNavigationBar()
         setConstraints()
     }
     

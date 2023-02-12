@@ -50,6 +50,11 @@ class HiScoreViewController: UIViewController {
         super.viewDidLayoutSubviews()
         backgroundImageView.frame = view.bounds
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        showNavigationBar()
+    }
 }
 
 //MARK: - UITableViewDelegate, UITableViewDataSource
