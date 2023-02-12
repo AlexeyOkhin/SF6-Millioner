@@ -29,6 +29,11 @@ struct Game {
     var isWin = false
     var usedRighteToMistake = true
     let costQuestion = ["100", "200", "300", "500", "1 000", "2 000", "4 000", "8 000", "16 000", "32 000", "64 000", "128 000", "256 000", "500 000", "1 Миллион"]
+    var hiScoreDictionary: [String: String] = [:]
+    
+    mutating func saveHiScore(by name: String, new hiScore: String) {
+        hiScoreDictionary[name] = hiScore
+    }
 
 
     var currentQuestion: Question {

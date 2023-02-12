@@ -125,7 +125,9 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         let mainVC = MainViewController()
         mainVC.modalPresentationStyle = .fullScreen
 //        mainVC.username = usernameTextField.text!.count > 0 ? usernameTextField.text : "User"
+        // FIXME: передать usernameTextField.text в модель
         mainVC.welcomeLabel.text = "Добро пожаловать \(usernameTextField.text!)!"
+        
         self.navigationController?.pushViewController(mainVC, animated: true)
         navigationItem.backButtonTitle = "Назад"
     }

@@ -32,13 +32,13 @@ struct HiScoreStorage {
 
     //MARK: - Internal Methods
 
-    func saveHiScore(by name: String, new hiScore: Int) {
-        let result = "\(name) -- \(hiScore)"
+    func saveHiScore(by nameAndHiScore: [String: String]) {
+        let result:[String:String] = nameAndHiScore
         storage.set(result, forKey: keyStorage)
     }
 
-    func getHiScore() -> String? {
-        return storage.string(forKey: keyStorage)
+    func getHiScore() -> [String: String] {
+        return storage.object(forKey: keyStorage) as? [String : String] ?? [ : ]
     }
 
     func resetViewCounterStorage() {
