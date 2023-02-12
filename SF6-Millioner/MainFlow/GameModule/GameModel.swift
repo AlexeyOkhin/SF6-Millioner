@@ -32,7 +32,7 @@ struct Game {
     var questions = Bundle.main.decode([Question].self, from: "questions.json").shuffled()
     var isWin = false
     var currentQuestion: Question?
-    var usedRighteToMistake = true
+    //var usedRighteToMistake = true
     let costQuestion = ["100", "200", "300", "500", "1 000", "2 000", "4 000", "8 000", "16 000", "32 000", "64 000", "128 000", "256 000", "500 000", "1 Миллион"]
     var hiScoreDictionary: [String: String] = [:]
     
@@ -61,6 +61,9 @@ struct Game {
         }
 
     mutating func checkAnswer(answer: String) -> Bool {
+        if !(answer == getCurrentQuestion().correctAnswer) {
+            live -= 1
+        }
         return answer == getCurrentQuestion().correctAnswer //currentQuestion.correctAnswer
     }
 
@@ -86,11 +89,11 @@ struct Game {
         }
         return currentQuestion?.wrongAnswers.randomElement() ?? "Зал в замешательстве"
     }
-
-    mutating func useRighteToMistake() {
-        level += 1
-        live  -= 1
-        usedRighteToMistake.toggle()
-    }
+//
+//    mutating func useRighteToMistake() {
+//        level += 1
+//        live  -= 1
+//        usedRighteToMistake.toggle()
+//    }
 }
 

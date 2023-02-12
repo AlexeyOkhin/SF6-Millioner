@@ -145,7 +145,7 @@ final class GameViewController: UIViewController {
         button.setBackgroundImage(UIImage(named: "rightToMistake"), for: .normal)
         button.layer.cornerRadius = CGFloat(20)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(callFriendPressed), for: .touchUpInside)
+        button.addTarget(self, action: #selector(rightToMistakePressed), for: .touchUpInside)
         return button
     }()
     
@@ -250,6 +250,7 @@ final class GameViewController: UIViewController {
     
     private func checkLevel(_ gameCheckAnswer: Bool) {
         //let resultVC = ResultViewController(level: game.level, costQuestion: game.costQuestion, answer: gameCheckAnswer)
+
         let resultVC = ResultViewController(level: game.level, costQuestion: game.costQuestion, isTrueAnswer: gameCheckAnswer)
         
 //        game.saveHiScore(by: game.nameGamer, new: game.currentQuestion.cost ?? "1 миллион")
@@ -334,8 +335,9 @@ final class GameViewController: UIViewController {
         game.isEnebleFHopeHalp = false
     }
     
-    @objc private func callFriendPressed() {
+    @objc private func rightToMistakePressed() {
         showAlert(title: "У вас есть право на ошибку:", message: "Используйте его с умом)")
+        game.live += 1
         rightToMistake.isEnabled = false
         game.isEnebleSecondLife = false
     }
