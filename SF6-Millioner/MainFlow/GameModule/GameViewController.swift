@@ -32,7 +32,6 @@ final class GameViewController: UIViewController {
     private var questionLabel: UILabel = {
         let labelView = UILabel()
         labelView.text = "За сколько секунд атакующая баскетбольная команда должна перевести мяч со своей половины поля на половину противника?"
-        //labelView.font = .systemFont(ofSize: 20)
         labelView.textColor = .white
         labelView.numberOfLines = 0
         labelView.textAlignment = .left
@@ -162,14 +161,12 @@ final class GameViewController: UIViewController {
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        //guard let hiScoreStorage else { return }
-       // game.hiScoreDictionary = hiScoreStorage.getHiScore()
 
         settingNavigationBar()
         initSubviews()
         setupConstraints()
         startGame()
-        //game.nameGamer = username
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -251,14 +248,9 @@ final class GameViewController: UIViewController {
     }
     
     private func checkLevel(_ gameCheckAnswer: Bool) {
-        //let resultVC = ResultViewController(level: game.level, costQuestion: game.costQuestion, answer: gameCheckAnswer)
 
         let resultVC = ResultViewController(level: game.level, costQuestion: game.costQuestion, isTrueAnswer: gameCheckAnswer)
-        
-//        game.saveHiScore(by: game.nameGamer, new: game.currentQuestion.cost ?? "1 миллион")
-//        hiScoreStorage?.saveHiScore(by: game.hiScoreDictionary)
-//        print(hiScoreStorage?.getHiScore())
-        
+
         if game.level > 14 && gameCheckAnswer {
             
             let finishVC = FinishViewController(failAttempt: game.level, isWin: game.isWin, money: game.getCurrentQuestion().cost ?? "1 миллион")
@@ -302,21 +294,6 @@ final class GameViewController: UIViewController {
         finishGame()
     }
     
-//    private func hiScoreStorageAndName() {
-//            guard let hiScoreStorage else {return}
-//
-//            if game.level == 1 {
-//                game.saveHiScore(by: game.nameGamer, new: "0")
-//                hiScoreStorage.saveHiScore(by: game.hiScoreDictionary)
-//
-//            } else {
-//                let currentCost = game.costQuestion[game.level - 2]
-//                game.saveHiScore(by: game.nameGamer, new: currentCost)
-//                hiScoreStorage.saveHiScore(by: game.hiScoreDictionary)
-//            }
-//            print(hiScoreStorage.getHiScore())
-//    }
-    
     @objc private func fiftyFiftyPressed() {
         let a = game.showFiftyFifty()
         let answers = [a.0, a.1]
@@ -339,10 +316,7 @@ final class GameViewController: UIViewController {
     }
     
     @objc private func callFriendPressed() {
-//        showAlert(title: "У вас есть право на ошибку:", message: "Используйте его с умом)")
-//        game.live += 1
-//        callFriend.isEnabled = false
-//        game.isEnebleSecondLife = false
+        
         showAlert(title: "Друг советует:", message: game.showHallHelp(persent: 80))
         callFriend.isEnabled = false
         game.isEnebleSecondLife = false

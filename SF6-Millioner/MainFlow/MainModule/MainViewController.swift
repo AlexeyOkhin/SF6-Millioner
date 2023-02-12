@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MainViewController: UIViewController {
+final class MainViewController: UIViewController {
     
     //MARK: - Private Properties
     var username: String = ""
@@ -119,11 +119,6 @@ class MainViewController: UIViewController {
         let gameVC = GameViewController()
         gameVC.userName = username
         navigationController?.pushViewController(gameVC, animated: true)
-        
-//        let registerVC = RegisterViewController()
-//        //navigationController?.pushViewController(registerVC, animated: false)
-//        registerVC.modalPresentationStyle = .fullScreen
-//        navigationController?.showDetailViewController(registerVC, sender: self)
     }
     
     @objc private func statisticButtonTapped() {

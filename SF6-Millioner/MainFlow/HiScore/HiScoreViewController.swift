@@ -79,14 +79,7 @@ extension HiScoreViewController: UITableViewDelegate, UITableViewDataSource {
         } catch {
             print(error)
         }
-
         
-//        let dict = dictionaryHiScore
-//        let sortedKeysAndValues = dict.sorted { $0[0] < $1[1] }
-//        
-//        let key = sortedKeysAndValues[indexPath.row][0]
-//        let value = sortedKeysAndValues[indexPath.row][1]
-//        cell?.setup(key, value)
         return cell ?? UITableViewCell()
 
     }

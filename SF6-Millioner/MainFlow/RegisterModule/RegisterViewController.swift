@@ -19,7 +19,6 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "gold")
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        //imageView.backgroundColor = .red
         return imageView
     }()
     
@@ -136,11 +135,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     
     @objc private func registerButtonPressed() {
         let mainVC = MainViewController()
-        //mainVC.username =
-        //mainVC.modalPresentationStyle = .fullScreen
-
-//        mainVC.username = usernameTextField.text!.count > 0 ? usernameTextField.text : "User"
-        // FIXME: передать usernameTextField.text в модель
+        
         mainVC.welcomeLabel.text = "Добро пожаловать \(usernameTextField.text ?? "")!"
         mainVC.username = usernameTextField.text ?? ""
         hideKeyboard()
