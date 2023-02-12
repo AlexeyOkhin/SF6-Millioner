@@ -13,7 +13,7 @@ struct Question: Decodable {
     let correctAnswer: String
     var wrongAnswers: [String]
     var cost: String?
-    //var newArrayWrong = [String]()
+    var newArrayWrong: [String]?
 
 }
 
@@ -28,20 +28,27 @@ struct Game {
     var live = 1
     var questions = Bundle.main.decode([Question].self, from: "questions.json").shuffled()
     var isWin = false
+    var currentQuestion: Question?
     var usedRighteToMistake = true
     let costQuestion = ["100", "200", "300", "500", "1 000", "2 000", "4 000", "8 000", "16 000", "32 000", "64 000", "128 000", "256 000", "500 000", "1 Миллион"]
     var hiScoreDictionary: [String: String] = [:]
     
-    mutating func saveHiScore(by name: String, new hiScore: String) {
-        hiScoreDictionary[name] = hiScore
-    }
+//    var currentQuestion: Question {
+//        var question = questions.first { $0.level == level } ?? Question(level: 1, ask: "Нет Вопросов(", correctAnswer: "?", wrongAnswers: ["?", "?", "?"])
+//        question.cost = costQuestion[level - 1]
+//        question.newArrayWrong = question.wrongAnswers
+//        return question
+//    }
 
-
-    var currentQuestion: Question {
+    mutating func getCurrentQuestion() -> Question {
         var question = questions.first { $0.level == level } ?? Question(level: 1, ask: "Нет Вопросов(", correctAnswer: "?", wrongAnswers: ["?", "?", "?"])
         question.cost = costQuestion[level - 1]
-        //question.newArrayWrong = question.wrongAnswers
+        currentQuestion = question
         return question
+    }
+
+    mutating func saveHiScore(by name: String, new hiScore: String) {
+        hiScoreDictionary[name] = hiScore
     }
 
     mutating func nextLevel() {
@@ -50,24 +57,31 @@ struct Game {
             }
         }
 
-    func checkAnswer(answer: String) -> Bool {
-        return answer == currentQuestion.correctAnswer
+    mutating func checkAnswer(answer: String) -> Bool {
+        return answer == getCurrentQuestion().correctAnswer //currentQuestion.correctAnswer
     }
 
     mutating func showFiftyFifty() -> (String, String) {
-        let correctAnswer = currentQuestion.correctAnswer
-        let wrongAnswer = currentQuestion.wrongAnswers.randomElement()!
-        let newArrayWrong = currentQuestion.wrongAnswers.filter { $0 != wrongAnswer }
-        //currentQuestion.newArrayWrong = newArrayWrong
+        let correctAnswer = getCurrentQuestion().correctAnswer //currentQuestion.correctAnswer
+        let wrongAnswer = getCurrentQuestion().wrongAnswers.randomElement()!
+        let newArrayWrong = getCurrentQuestion().wrongAnswers.filter { $0 == wrongAnswer }
+        currentQuestion?.newArrayWrong = newArrayWrong
         return (correctAnswer, wrongAnswer)
     }
 
-    func showHallHelp(persent: Int) -> String {
+    private func settingFiftyFifty() {
+
+    }
+
+    mutating func showHallHelp(persent: Int) -> String {
         let roll = Int.random(in: 0...100)
         if roll <= persent {
-            return currentQuestion.correctAnswer
+            return currentQuestion?.correctAnswer ?? "Зал в замешательстве"
         }
-        return currentQuestion.wrongAnswers.randomElement() ?? "Зал в замешательстве"
+        if !(currentQuestion?.newArrayWrong?.isEmpty ?? true) {
+            return currentQuestion?.newArrayWrong?.randomElement() ?? "Зал в замешательстве"
+        }
+        return currentQuestion?.wrongAnswers.randomElement() ?? "Зал в замешательстве"
     }
 
     mutating func useRighteToMistake() {

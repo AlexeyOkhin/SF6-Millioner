@@ -175,7 +175,7 @@ final class GameViewController: UIViewController {
         super.viewWillAppear(animated)
         if game.level > 1 {
             startGame()
-            print(game.currentQuestion.correctAnswer)
+            print(game.getCurrentQuestion().correctAnswer)
             showNavigationBar()
         }
     }
@@ -187,9 +187,9 @@ final class GameViewController: UIViewController {
 
     
     private func startGame() {
-        questionLabel.text = game.currentQuestion.ask
+        questionLabel.text = game.getCurrentQuestion().ask
         questionNumberLabel.text = "Вопрос \(game.level)"
-        scoreLabel.text = "\(game.currentQuestion.cost ?? "0")"
+        scoreLabel.text = "\(game.getCurrentQuestion().cost ?? "0")"
         setTitleAnswer()
         let buttons = [answerAButton, answerBButton, answerCButton, answerDButton]
 
@@ -201,7 +201,7 @@ final class GameViewController: UIViewController {
     
     private func setTitleAnswer() {
         let buttons = [answerAButton, answerBButton, answerCButton, answerDButton].shuffled()
-        let answers = game.currentQuestion.wrongAnswers + [game.currentQuestion.correctAnswer]
+        let answers = game.getCurrentQuestion().wrongAnswers + [game.getCurrentQuestion().correctAnswer]
         for (num, button) in buttons.enumerated() {
             button.setTitle(answers[num], for: .normal)
         }
@@ -258,7 +258,7 @@ final class GameViewController: UIViewController {
         
         if game.level > 14 && gameCheckAnswer {
             
-            let finishVC = FinishViewController(failAttempt: game.level, isWin: game.isWin, money: game.currentQuestion.cost ?? "1 миллион")
+            let finishVC = FinishViewController(failAttempt: game.level, isWin: game.isWin, money: game.getCurrentQuestion().cost ?? "1 миллион")
             
             progressBar.progress = 0.0
             timer.invalidate()
@@ -383,7 +383,7 @@ final class GameViewController: UIViewController {
         stopGame()
         let dicHiScore = hiScoreStorage?.getHiScore()
         
-        hiScoreStorage?.saveHiScore(by: [userName: game.currentQuestion.cost ?? "ноль"])
+        hiScoreStorage?.saveHiScore(by: [userName: game.getCurrentQuestion().cost ?? "ноль"])
         self.navigationController?.pushViewController(finishVC, animated: true)
     }
     
