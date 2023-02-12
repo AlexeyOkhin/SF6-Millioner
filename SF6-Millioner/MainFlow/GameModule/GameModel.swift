@@ -13,6 +13,7 @@ struct Question: Decodable {
     let correctAnswer: String
     var wrongAnswers: [String]
     var cost: String?
+    //var newArrayWrong = [String]()
 
 }
 
@@ -39,6 +40,7 @@ struct Game {
     var currentQuestion: Question {
         var question = questions.first { $0.level == level } ?? Question(level: 1, ask: "Нет Вопросов(", correctAnswer: "?", wrongAnswers: ["?", "?", "?"])
         question.cost = costQuestion[level - 1]
+        //question.newArrayWrong = question.wrongAnswers
         return question
     }
 
@@ -52,11 +54,11 @@ struct Game {
         return answer == currentQuestion.correctAnswer
     }
 
-    func showFiftyFifty() -> (String, String) {
+    mutating func showFiftyFifty() -> (String, String) {
         let correctAnswer = currentQuestion.correctAnswer
         let wrongAnswer = currentQuestion.wrongAnswers.randomElement()!
         let newArrayWrong = currentQuestion.wrongAnswers.filter { $0 != wrongAnswer }
-        
+        //currentQuestion.newArrayWrong = newArrayWrong
         return (correctAnswer, wrongAnswer)
     }
 

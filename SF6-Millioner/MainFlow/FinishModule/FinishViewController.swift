@@ -52,7 +52,7 @@ final class FinishViewController: UIViewController {
         return label
     }()
     
-    private var playAgainButton: UIButton = {
+    private lazy var playAgainButton: UIButton = {
         let button = UIButton(frame: CGRect(x: 20, y: 500, width: 300, height: 100))
         button.backgroundColor = UIColor(hexString: "#34B83A")
         button.setTitle("Играть еще раз", for: .normal)

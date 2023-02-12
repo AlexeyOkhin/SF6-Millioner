@@ -34,11 +34,14 @@ struct HiScoreStorage {
 
     func saveHiScore(by nameAndHiScore: [String: String]) {
         let result:[String:String] = nameAndHiScore
-        storage.set(result, forKey: keyStorage)
+        //storage.set(result, forKey: keyStorage)
+        storage.set(object: result, forKey: keyStorage)
+
     }
 
     func getHiScore() -> [String: String] {
-        return storage.object(forKey: keyStorage) as? [String : String] ?? [ : ]
+        //return storage.object(forKey: keyStorage) as? [String : String] ?? [ : ]
+        return storage.object([String: String].self, with: keyStorage) ?? [:]
     }
     
     func getAmountOfStorage() -> Int {

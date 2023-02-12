@@ -379,11 +379,10 @@ final class GameViewController: UIViewController {
     private func finishGame() {
         let finishVC = FinishViewController(failAttempt: game.level, isWin: game.isWin, money: String(game.currentSum))
         
-        progressBar.progress = 0.0
-        timer.invalidate()
-        timerSound.stop()
-        secondsPassed = 0
+        stopGame()
+        let dicHiScore = hiScoreStorage?.getHiScore()
         
+        hiScoreStorage?.saveHiScore(by: [userName: game.currentQuestion.cost ?? "ноль"])
         self.navigationController?.pushViewController(finishVC, animated: true)
     }
     

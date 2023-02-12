@@ -30,6 +30,7 @@
 		0CE263DB298F6ECF00660514 /* checkAnswer.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0CE263D6298F6ECF00660514 /* checkAnswer.mp3 */; };
 		0CE263DC298F6ECF00660514 /* answerTrue.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0CE263D7298F6ECF00660514 /* answerTrue.mp3 */; };
 		0CF70AD229981D5700B86EE3 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF70AD129981D5700B86EE3 /* GameViewController.swift */; };
+		0CF70AD52998B2CC00B86EE3 /* UserDefoult + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF70AD42998B2CC00B86EE3 /* UserDefoult + Extension.swift */; };
 		241507D82996AE4A0021F9A9 /* HiScoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241507D72996AE4A0021F9A9 /* HiScoreTableViewCell.swift */; };
 		24A77E42299636DD00004282 /* HiScoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A77E41299636DD00004282 /* HiScoreViewController.swift */; };
 		883B93BD299292A800F421B9 /* RulesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883B93BC299292A800F421B9 /* RulesViewController.swift */; };
@@ -62,6 +63,7 @@
 		0CE263D6298F6ECF00660514 /* checkAnswer.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = checkAnswer.mp3; sourceTree = "<group>"; };
 		0CE263D7298F6ECF00660514 /* answerTrue.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = answerTrue.mp3; sourceTree = "<group>"; };
 		0CF70AD129981D5700B86EE3 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		0CF70AD42998B2CC00B86EE3 /* UserDefoult + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefoult + Extension.swift"; sourceTree = "<group>"; };
 		241507D72996AE4A0021F9A9 /* HiScoreTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiScoreTableViewCell.swift; sourceTree = "<group>"; };
 		24A77E41299636DD00004282 /* HiScoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiScoreViewController.swift; sourceTree = "<group>"; };
 		883B93BC299292A800F421B9 /* RulesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesViewController.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 				0C96A74D29914F4D00D7FA79 /* UiColor + Extension.swift */,
 				0C96A75D29915DFB00D7FA79 /* Bundle + extension.swift */,
 				0C1EAC33299420CC009F061F /* UIViewControler + Extension.swift */,
+				0CF70AD42998B2CC00B86EE3 /* UserDefoult + Extension.swift */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -360,6 +363,7 @@
 				0CE263B5298F6B2B00660514 /* SceneDelegate.swift in Sources */,
 				0C1EAC34299420CC009F061F /* UIViewControler + Extension.swift in Sources */,
 				883B93BD299292A800F421B9 /* RulesViewController.swift in Sources */,
+				0CF70AD52998B2CC00B86EE3 /* UserDefoult + Extension.swift in Sources */,
 				0C96A758299154D800D7FA79 /* HiScoreStorage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
