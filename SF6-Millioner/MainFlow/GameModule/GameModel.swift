@@ -27,14 +27,14 @@ struct Game {
     var isEnebleSecondLife = true
     var nameGamer: String = ""
     var fireproofAmount: Int
-    var currentSum = 0
+    var currentSum = "0"
     var live = 1
     var questions = Bundle.main.decode([Question].self, from: "questions.json").shuffled()
     var isWin = false
     var currentQuestion: Question?
     //var usedRighteToMistake = true
-    let costQuestion = ["100", "200", "300", "500", "1 000", "2 000", "4 000", "8 000", "16 000", "32 000", "64 000", "128 000", "256 000", "500 000", "1 Миллион"]
-    var hiScoreDictionary: [String: String] = [:]
+    let costQuestion = ["100", "200", "300", "500", "1000", "2000", "4000", "8000", "16000", "32000", "64000", "128000", "256000", "500000", "1Миллион"]
+    //var hiScoreDictionary: [String: String] = [:]
     
 //    var currentQuestion: Question {
 //        var question = questions.first { $0.level == level } ?? Question(level: 1, ask: "Нет Вопросов(", correctAnswer: "?", wrongAnswers: ["?", "?", "?"])
@@ -50,9 +50,9 @@ struct Game {
         return question
     }
 
-    mutating func saveHiScore(by name: String, new hiScore: String) {
-        hiScoreDictionary[name] = hiScore
-    }
+//    mutating func saveHiScore(by name: String, new hiScore: String) {
+//        hiScoreDictionary[name] = hiScore
+//    }
 
     mutating func nextLevel() {
             if level > 0 && level < 15 {

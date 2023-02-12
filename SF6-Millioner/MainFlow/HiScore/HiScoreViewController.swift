@@ -71,7 +71,7 @@ extension HiScoreViewController: UITableViewDelegate, UITableViewDataSource {
                                                  for: indexPath) as? HiScoreTableViewCell
         do {
             let highScore = try HiScoreStorage()
-            let highScoreValue = highScore.getHiScore().map { $0.components(separatedBy: "++")}.sorted { $0[1] < $1[1]}
+            let highScoreValue = highScore.getHiScore().map { $0.components(separatedBy: "++")}.sorted { $0[1] > $1[1]}
 
             print(highScoreValue)
             cell?.nameLabel.text = highScoreValue[indexPath.row][0]

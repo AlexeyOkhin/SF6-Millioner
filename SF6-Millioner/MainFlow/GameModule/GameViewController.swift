@@ -140,12 +140,12 @@ final class GameViewController: UIViewController {
         return button
     }()
     
-    lazy private var rightToMistake: UIButton = {
+    lazy private var callFriend: UIButton = {
         let button = UIButton()
-        button.setBackgroundImage(UIImage(named: "rightToMistake"), for: .normal)
+        button.setBackgroundImage(UIImage(named: "callFriend"), for: .normal)
         button.layer.cornerRadius = CGFloat(20)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(rightToMistakePressed), for: .touchUpInside)
+        button.addTarget(self, action: #selector(callFriendPressed), for: .touchUpInside)
         return button
     }()
     
@@ -262,7 +262,7 @@ final class GameViewController: UIViewController {
         if game.level > 14 && gameCheckAnswer {
             
             let finishVC = FinishViewController(failAttempt: game.level, isWin: game.isWin, money: game.getCurrentQuestion().cost ?? "1 миллион")
-            
+            game.currentSum = game.currentQuestion?.cost ?? "0000"
             progressBar.progress = 0.0
             timer.invalidate()
             timerSound.stop()
@@ -270,6 +270,7 @@ final class GameViewController: UIViewController {
             
             self.navigationController?.pushViewController(finishVC, animated: true)
         } else {
+            game.currentSum = game.currentQuestion?.cost ?? "0000"
             game.nextLevel()
             self.navigationController?.pushViewController(resultVC, animated: true)
         }
@@ -337,10 +338,13 @@ final class GameViewController: UIViewController {
         game.isEnebleFHopeHalp = false
     }
     
-    @objc private func rightToMistakePressed() {
-        showAlert(title: "У вас есть право на ошибку:", message: "Используйте его с умом)")
-        game.live += 1
-        rightToMistake.isEnabled = false
+    @objc private func callFriendPressed() {
+//        showAlert(title: "У вас есть право на ошибку:", message: "Используйте его с умом)")
+//        game.live += 1
+//        callFriend.isEnabled = false
+//        game.isEnebleSecondLife = false
+        showAlert(title: "Друг советует:", message: game.showHallHelp(persent: 80))
+        callFriend.isEnabled = false
         game.isEnebleSecondLife = false
     }
     
@@ -364,7 +368,7 @@ final class GameViewController: UIViewController {
         
         self.view.addSubview(fiftyFifty)
         self.view.addSubview(hallHelp)
-        self.view.addSubview(rightToMistake)
+        self.view.addSubview(callFriend)
         
         self.view.addSubview(takeCash)
     }
@@ -396,12 +400,14 @@ final class GameViewController: UIViewController {
     }
 
     private func saveResult() {
-        var dicHiScore = hiScoreStorage?.getHiScore()
-        dicHiScore?.append("\(userName) ++ \(game.getCurrentQuestion().cost ?? "0000")")
-        hiScoreStorage?.saveHiScore(by: dicHiScore ?? [String]())
+        if game.currentSum != "0" {
+            var dicHiScore = hiScoreStorage?.getHiScore()
+            dicHiScore?.append("\(userName) ++ \(game.currentSum)")
+            hiScoreStorage?.saveHiScore(by: dicHiScore ?? [String]())
+        }
     }
     
-    
+
     //MARK: - Setup Constraints
     private func setupConstraints(){
         
@@ -457,7 +463,7 @@ final class GameViewController: UIViewController {
         ])
         
         //Stack for Helps Button
-        let helpStackView = UIStackView(arrangedSubviews: [fiftyFifty, hallHelp, rightToMistake])
+        let helpStackView = UIStackView(arrangedSubviews: [fiftyFifty, hallHelp, callFriend])
         helpStackView.axis = .horizontal
         helpStackView.distribution = .fillEqually
         helpStackView.spacing = 10
